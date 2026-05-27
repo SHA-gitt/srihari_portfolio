@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Torch Motion Ecosystem — Srihari A Pillai</title>
+    <meta name="description"
+        content="M.Tech at IIT Kharagpur. Building intelligent automation for additive manufacturing — from custom firmware to digital twins.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;family=Space+Grotesk:wght@500;700&amp;display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .project { display: block !important; border-top: none; padding-top: 40px; }
+    </style>
+</head>
+
+<body>
+
+    <!-- ═══ NAVBAR ═══ -->
+    <nav class="nav">
+        <div class="container">
+            <div class="nav-logo">Hi There<span>,</span></div>
+            <ul class="nav-links">
+                <li><a href="index.html#glance">At a Glance</a></li>
+                <li><a href="index.html#experience">Experience</a></li>
+                <li><a href="index.html#work">Projects</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+                <li><button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle Dark Mode"><i
+                            data-lucide="moon"></i></button></li>
+                <li>
+                    <div id="realtime-clock" class="nav-clock"></div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <section id="work" style="padding-top: 80px;">
+        <div class="project" id="proj-torch">
+            <div class="container">
+                <a class="btn btn-outline reveal" href="index.html#work" style="margin-bottom: 2rem; padding: 0.5rem 1rem; display: inline-flex;">&larr; Back to Portfolio</a>
+                <div class="project-num reveal">01</div>
+                <div class="project-header">
+                    <div class="reveal">
+                        <h3 class="project-title">Torch Motion Ecosystem</h3>
+                        <div class="project-stack">
+                            <span class="skill-chip">Python</span>
+                            <span class="skill-chip">PyQt5</span>
+                            <span class="skill-chip">PyOpenGL</span>
+                            <span class="skill-chip green">ESP32</span>
+                            <span class="skill-chip green">Arduino</span>
+                            <span class="skill-chip violet">Shapely</span>
+                        </div>
+                    </div>
+                    <span class="project-path reveal">~/WAAM_Robot/</span>
+                </div>
+
+                <!-- Concise Narrative & Architecture -->
+                <div class="narrative narrative-full">
+                    <div class="narrative-block reveal">
+                        <p><strong>About:</strong> Torch Motion is a motion control ecosystem developed for
+                            custom-built MIG-based Cartesian robot, Centre for Railway Research, IIT
+                            Kharagpur. Purpose built for WAAM applications, the ecosystem includes a purpose-built path
+                            programming language, ToM Code, tailored for WAAM applications and customizable for
+                            different use cases, along with a ToM Slicer that generates toolpaths from STL files and
+                            compiles them into executable ToM Code. A digital twin of the firmware is developed to
+                            validate programs prior to execution, improving reliability and reducing hardware
+                            trial-and-error. Additionally, a G-code to ToM Code compiler ensures compatibility with
+                            existing 3D printing workflows, while support for multiple end-effectors
+                            such as a laser profilometer and plasma torch enables broader manufacturing applications.
+                        </p>
+                        <p class="mt-4"><strong>Purpose:</strong> To learn and develop a cost effective motion control
+                            system feasible for research purposes by overcoming the high licensing cost, limited
+                            adaptability, and vendor dependency of commercially available WAAM systems.
+                        </p>
+                        <div class="pipeline mt-4">
+                            <div class="pipe-stage">
+                                <div class="pipe-dot blue">1</div>
+                                <div class="pipe-text"><strong>CAD file</strong>.STL Format</div>
+                            </div>
+                            <div class="pipe-stage">
+                                <div class="pipe-dot violet">2</div>
+                                <div class="pipe-text"><strong>ToM Slicer</strong>generates ToM Code</div>
+                            </div>
+                            <div class="pipe-stage">
+                                <div class="pipe-dot blue">3</div>
+                                <div class="pipe-text"><strong>Digital Twin</strong>Validate deposition</div>
+                            </div>
+                            <div class="pipe-stage">
+                                <div class="pipe-dot orange">4</div>
+                                <div class="pipe-text"><strong>Motion Compiler</strong>generates pulse band</div>
+                            </div>
+                            <div class="pipe-stage">
+                                <div class="pipe-dot orange">5</div>
+                                <div class="pipe-text"><strong>Motion Communicator</strong>Transferring pulse bands
+                                </div>
+                            </div>
+                            <div class="pipe-stage">
+                                <div class="pipe-dot green">6</div>
+                                <div class="pipe-text"><strong>Execution</strong> Robot performs task</div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="reveal" style="display: flex; justify-content: flex-end; margin-top: 1rem;">
+                        <a href="project-details.html#proj-torch" class="btn btn-outline"
+                            style="padding: 0.5rem 1.25rem; font-size: 0.9rem;">Know
+                            More &rarr;</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>Designed and built by Srihari A Pillai. 2026.</p>
+    </footer>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

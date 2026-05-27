@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caterpillar Inc. — Srihari A Pillai</title>
+    <meta name="description"
+        content="M.Tech at IIT Kharagpur. Building intelligent automation for additive manufacturing — from custom firmware to digital twins.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;family=Space+Grotesk:wght@500;700&amp;display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .project {
+            display: block !important;
+            border-top: none;
+            padding-top: 40px;
+        }
+
+        .experience-list {
+            padding-left: 1.2rem;
+            margin-top: 1rem;
+            line-height: 1.8;
+            color: var(--muted);
+            text-align: justify;
+        }
+
+        .experience-list li {
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ═══ NAVBAR ═══ -->
+    <nav class="nav">
+        <div class="container">
+            <div class="nav-logo">Caterpillar<span>,</span></div>
+            <ul class="nav-links">
+                <li><a href="index.html#glance">At a Glance</a></li>
+                <li><a href="index.html#experience">Experience</a></li>
+                <li><a href="index.html#work">Projects</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+                <li><button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle Dark Mode"><i
+                            data-lucide="moon"></i></button></li>
+                <li>
+                    <div id="realtime-clock" class="nav-clock"></div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <section id="work" style="padding-top: 80px;">
+        <div class="project">
+            <div class="container">
+                <a class="btn btn-outline reveal" href="index.html#experience"
+                    style="margin-bottom: 2rem; padding: 0.5rem 1rem; display: inline-flex;">&larr; Back to
+                    Portfolio</a>
+
+                <div class="project-header" style="flex-direction: column; gap: 1rem;">
+                    <div class="reveal">
+                        <div
+                            style="font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; color: var(--accent-2); margin-bottom: 0.5rem;">
+                            May 2023 — Jul 2023</div>
+                        <h3 class="project-title" style="margin-bottom: 0.5rem;">Caterpillar India Private Limited</h3>
+                        <p
+                            style="font-size: 1.1rem; color: var(--muted); margin-bottom: 1.5rem; max-width: 800px; line-height: 1.6;">
+                            Engineering Intern</p>
+
+                        <div class="skill-cloud">
+                            <span class="skill-chip green">IIoT</span>
+                            <span class="skill-chip green">CNC Maintenance</span>
+                            <span class="skill-chip orange">Root Cause Analysis</span>
+                            <span class="skill-chip orange">Lean Six Sigma</span>
+                            <span class="skill-chip orange">Predictive Maintenance</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="narrative narrative-full">
+                    <div class="narrative-block reveal">
+                        <ul class="experience-list">
+                            <li>Analyzed IIoT-based CNC maintenance data logs to identify recurring failure patterns and
+                                system inefficiencies, resulting in identification of vulnerabilities during machining
+                                process.</li>
+                            <li>Performed root cause analysis using Pareto charts and 5-Whys methodology to isolate
+                                critical issues, effectively streamlining the troubleshooting process for the
+                                maintenance operations.</li>
+                            <li style="margin-bottom: 0;">Proposed implementation of targeted maintenance improvements
+                                and predictive maintenance schedules, ultimately reducing unplanned machine downtime by
+                                over 50% across the shop floor.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>Designed and built by Srihari A Pillai. 2026.</p>
+    </footer>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laser Profilometer — Srihari A Pillai</title>
+    <meta name="description"
+        content="M.Tech at IIT Kharagpur. Building intelligent automation for additive manufacturing — from custom firmware to digital twins.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;family=Space+Grotesk:wght@500;700&amp;display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .project { display: block !important; border-top: none; padding-top: 40px; }
+    </style>
+</head>
+
+<body>
+
+    <!-- ═══ NAVBAR ═══ -->
+    <nav class="nav">
+        <div class="container">
+            <div class="nav-logo">Hi There<span>,</span></div>
+            <ul class="nav-links">
+                <li><a href="index.html#glance">At a Glance</a></li>
+                <li><a href="index.html#experience">Experience</a></li>
+                <li><a href="index.html#work">Projects</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+                <li><button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle Dark Mode"><i
+                            data-lucide="moon"></i></button></li>
+                <li>
+                    <div id="realtime-clock" class="nav-clock"></div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <section id="work" style="padding-top: 80px;">
+        <div class="project" id="proj-laser">
+            <div class="container">
+                <a class="btn btn-outline reveal" href="index.html#work" style="margin-bottom: 2rem; padding: 0.5rem 1rem; display: inline-flex;">&larr; Back to Portfolio</a>
+                <div class="project-num reveal">02</div>
+                <div class="project-header">
+                    <div class="reveal">
+                        <h3 class="project-title">Laser profilometer</h3>
+                        <div class="project-stack">
+                            <span class="skill-chip">OpenCV</span>
+                            <span class="skill-chip">NumPy</span>
+                            <span class="skill-chip green">Raspberry Pi</span>
+                        </div>
+                    </div>
+                    <span class="project-path reveal">~/Profile_Extraction/</span>
+                </div>
+
+                <!-- Concise Narrative & Architecture -->
+                <div class="narrative narrative-full">
+                    <div class="narrative-block reveal">
+                        <p><strong>About:</strong> Laser profilometry is a non-contact optical metrology method
+                            used to measure the surface topography of objects, in this case, weld bead width and height.
+                            It uses a line laser to scan across the surface, and a camera to capture the
+                            reflection of the laser line from the surface. This laser and camera setup is mounted on the
+                            custom built Cartesian robot, at Center for Railway Research, IIT Kharagpur, and can be
+                            prompted for selective capturing of specified number of cross sectional images via ToM Code.
+                            The captured images are stored in a tree-branch structure for batch processing. The tree
+                            folder and process parameter directory is fed to the script that processes all the images
+                            sequencially and extracts the weld bead geometry and generates a dataset with specimen
+                            number, bead width and bead height and respective process parameter.
+                        </p>
+                        <p class="mt-4"><strong>Purpose:</strong> To develop an autonomous measurement system for given
+                            deposition region and also to generate dataset containing process parameter and bead
+                            geometry features to train a Physics Informed Neural Network (PINN) model to predict the
+                            process parameter for repairing worn out rail surface in railway tracks using WAAM.
+                        </p>
+
+                        <div class="pipeline mt-4">
+                            <div class="pipe-stage">
+                                <div class="pipe-dot blue">1</div>
+                                <div class="pipe-text"><strong>Input</strong>Tree folder and Process parameters
+                                    directory</div>
+                            </div>
+                            <div class="pipe-stage">
+                                <div class="pipe-dot violet">2</div>
+                                <div class="pipe-text"><strong>Skeletonize</strong>converts thick laser profile into
+                                    cross-section outline</div>
+                            </div>
+                            <div class="pipe-stage">
+                                <div class="pipe-dot orange">3</div>
+                                <div class="pipe-text"><strong>Feature Extraction</strong>annotates plateau and
+                                    curvature region</div>
+                            </div>
+                            <div class="pipe-stage">
+                                <div class="pipe-dot violet">4</div>
+                                <div class="pipe-text"><strong>Calibration & Computation</strong>computes bead geometry
+                                    after IRLS calibration</div>
+                            </div>
+                            <div class="pipe-stage">
+                                <div class="pipe-dot green">5</div>
+                                <div class="pipe-text"><strong>Output</strong>Generates dataset for PINN model training
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="reveal" style="display: flex; justify-content: flex-end; margin-top: 1rem;">
+                        <a href="project-details.html#proj-laser" class="btn btn-outline"
+                            style="padding: 0.5rem 1.25rem; font-size: 0.9rem;">Know
+                            More &rarr;</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>Designed and built by Srihari A Pillai. 2026.</p>
+    </footer>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

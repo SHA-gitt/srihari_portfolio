@@ -1,0 +1,348 @@
+<?xml version="1.0"?>
+<robot name="bicopter">
+
+<!-- ================= BASE ================= -->
+
+<link name="base_link">
+
+  <visual>
+    <geometry>
+      <mesh filename="./meshes/base.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="base_gray">
+      <color rgba="0.5 0.5 0.5 1"/>
+    </material>
+  </visual>
+
+  <collision>
+    <geometry>
+      <box size="0.10 0.10 0.02"/>
+    </geometry>
+  </collision>
+
+  <inertial>
+    <origin xyz="0 0 -0.154951385"/>
+    <mass value="0.108956"/>
+    <inertia
+      ixx="8.876703e-05"
+      ixy="0"
+      ixz="0"
+      iyy="8.946850e-05"
+      iyz="0"
+      izz="1.761580e-04"/>
+  </inertial>
+
+</link>
+
+<!-- ================= STRUD ================= -->
+
+<link name="strud_link">
+
+  <visual>
+    <geometry>
+      <mesh filename="./meshes/strud.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="strud_light">
+      <color rgba="0.7 0.7 0.75 1"/>
+    </material>
+  </visual>
+
+  <collision>
+    <geometry>
+      <box size="0.057 0.020 0.165"/>
+    </geometry>
+  </collision>
+
+  <inertial>
+    <origin xyz="-0.020033411 0 -0.062198048"/>
+    <mass value="0.039574"/>
+    <inertia
+      ixx="1.010770e-04"
+      ixy="0"
+      ixz="0"
+      iyy="1.032565e-04"
+      iyz="0"
+      izz="4.839678e-06"/>
+  </inertial>
+
+</link>
+
+<joint name="base_to_strud" type="fixed">
+  <parent link="base_link"/>
+  <child link="strud_link"/>
+  <origin xyz="0 0 0"/>
+</joint>
+
+<!-- ================= MOTORSTAND ================= -->
+
+<link name="motorstand">
+
+  <visual>
+    <geometry>
+      <mesh filename="./meshes/motorstand.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="motorstand_dark">
+      <color rgba="0.35 0.35 0.35 1"/>
+    </material>
+  </visual>
+
+  <collision>
+    <geometry>
+      <box size="0.030 0.200 0.015"/>
+    </geometry>
+  </collision>
+
+  <inertial>
+    <origin xyz="0.000002 -0.000421 0.000725557"/>
+    <mass value="0.037026"/>
+    <inertia
+      ixx="1.599873e-04"
+      ixy="0"
+      ixz="0"
+      iyy="2.586565e-06"
+      iyz="0"
+      izz="1.612380e-04"/>
+  </inertial>
+
+</link>
+
+<joint name="motorstand_pivot" type="revolute">
+  <parent link="strud_link"/>
+  <child link="motorstand"/>
+  <origin xyz="0 0 0"/>
+  <axis xyz="1 0 0"/>
+  <limit lower="-0.698" upper="0.698" effort="20" velocity="10"/>
+  <dynamics damping="0.2" friction="0.1"/>
+</joint>
+
+<!-- ================= IMU ================= -->
+
+<link name="IMU_sensor">
+
+  <visual>
+    <geometry>
+      <mesh filename="./meshes/MPU6050.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="imu_blue">
+      <color rgba="0.1 0.6 1 1"/>
+    </material>
+  </visual>
+
+  <collision>
+    <geometry>
+      <box size="0.015 0.020 0.002"/>
+    </geometry>
+  </collision>
+
+  <inertial>
+    <origin xyz="0 0 0.0085"/>
+    <mass value="0.003"/>
+    <inertia
+      ixx="1.01e-07"
+      ixy="0"
+      ixz="0"
+      iyy="5.725e-08"
+      iyz="0"
+      izz="1.5625e-07"/>
+  </inertial>
+
+</link>
+
+<joint name="imu_sensor_to_motor_stand" type="fixed">
+  <parent link="motorstand"/>
+  <child link="IMU_sensor"/>
+  <origin xyz="0 0 0"/>
+</joint>
+
+<!-- ================= LEFT MOTOR ================= -->
+
+<link name="motor_left">
+
+  <visual>
+    <geometry>
+      <mesh filename="./meshes/N10_motor.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="motor_metal">
+      <color rgba="0.65 0.65 0.7 1"/>
+    </material>
+  </visual>
+
+  <collision>
+    <geometry>
+      <cylinder radius="0.00625" length="0.018"/>
+    </geometry>
+  </collision>
+
+  <inertial>
+    <mass value="0.012"/>
+    <inertia
+      ixx="2.2e-07"
+      iyy="2.2e-07"
+      izz="2e-07"
+      ixy="0"
+      ixz="0"
+      iyz="0"/>
+  </inertial>
+
+</link>
+
+<joint name="motorstand_to_motor_left" type="fixed">
+  <parent link="motorstand"/>
+  <child link="motor_left"/>
+  <origin xyz="0 0.09 0.0075"/>
+</joint>
+
+<!-- ================= LEFT ROTOR ================= -->
+
+<link name="rotor_left">
+
+  <visual>
+    <geometry>
+      <mesh filename="./meshes/blade.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="rotor_black">
+      <color rgba="0.05 0.05 0.05 1"/>
+    </material>
+  </visual>
+
+  <collision>
+    <geometry>
+      <box size="0.055 0.010 0.003"/>
+    </geometry>
+  </collision>
+
+<inertial>
+  <mass value="0.0025"/>
+  <inertia
+    ixx="2e-06"
+    iyy="2e-06"
+    izz="4e-06"
+    ixy="0"
+    ixz="0"
+    iyz="0"/>
+</inertial>
+
+</link>
+
+<joint name="motor_left_to_rotor_left" type="continuous">
+  <parent link="motor_left"/>
+  <child link="rotor_left"/>
+  <origin xyz="0 0 0.001"/>
+  <axis xyz="0 0 1"/>
+</joint>
+
+<!-- ================= RIGHT MOTOR ================= -->
+
+<link name="motor_right">
+
+  <visual>
+    <geometry>
+      <mesh filename="./meshes/N10_motor.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="motor_metal"/>
+  </visual>
+
+  <collision>
+    <geometry>
+      <cylinder radius="0.00625" length="0.018"/>
+    </geometry>
+  </collision>
+
+  <inertial>
+    <mass value="0.012"/>
+    <inertia
+      ixx="2.2e-07"
+      iyy="2.2e-07"
+      izz="2e-07"
+      ixy="0"
+      ixz="0"
+      iyz="0"/>
+  </inertial>
+
+</link>
+
+<joint name="motorstand_to_motor_right" type="fixed">
+  <parent link="motorstand"/>
+  <child link="motor_right"/>
+  <origin xyz="0 -0.09 0.0075"/>
+</joint>
+
+<!-- ================= RIGHT ROTOR ================= -->
+
+<link name="rotor_right">
+
+  <visual>
+    <geometry>
+      <mesh filename="./meshes/blade.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="rotor_red">
+      <color rgba="0.85 0.1 0.1 1"/>
+    </material>
+  </visual>
+
+  <collision>
+    <geometry>
+      <box size="0.055 0.010 0.003"/>
+    </geometry>
+  </collision>
+
+  <inertial>
+    <mass value="0.0025"/>
+    <inertia
+      ixx="2e-06"
+      iyy="2e-06"
+      izz="4e-06"
+      ixy="0"
+      ixz="0"
+      iyz="0"/>
+  </inertial>
+
+</link>
+
+<joint name="motor_right_to_rotor_right" type="continuous">
+  <parent link="motor_right"/>
+  <child link="rotor_right"/>
+  <origin xyz="0 0 0.001"/>
+  <axis xyz="0 0 1"/>
+</joint>
+
+<!-- ================= ENCLOSURE ================= -->
+
+<link name="enclosure_strud_link">
+
+  <visual>
+    <geometry>
+      <mesh filename="./meshes/sdieenclosure.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="enclosure_green">
+      <color rgba="0.2 0.7 0.2 1"/>
+    </material>
+  </visual>
+
+  <collision>
+    <geometry>
+      <box size="0.011 0.020 0.165"/>
+    </geometry>
+  </collision>
+
+  <inertial>
+    <origin xyz="0.0225 0 -0.068592346"/>
+    <mass value="0.035355"/>
+    <inertia
+      ixx="8.270069e-05"
+      ixy="0"
+      ixz="0"
+      iyy="8.174971e-05"
+      iyz="0"
+      izz="1.663967e-06"/>
+  </inertial>
+
+</link>
+
+<joint name="base_to_enclosure" type="fixed">
+  <parent link="base_link"/>
+  <child link="enclosure_strud_link"/>
+  <origin xyz="0 0 0"/>
+</joint>
+
+</robot>

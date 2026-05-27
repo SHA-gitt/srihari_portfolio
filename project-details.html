@@ -1,0 +1,2373 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Details — Srihari A Pillai</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .project-detail-section {
+            padding: 2rem 0 60px;
+            min-height: 100vh;
+            zoom: 0.85;
+        }
+
+        .project-header-module {
+            margin-bottom: 4rem;
+            text-align: center;
+        }
+
+        .project-header-module h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 1rem;
+        }
+
+        .media-text-module {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+            margin-bottom: 6rem;
+            align-items: center;
+        }
+
+        @media (min-width: 768px) {
+            .media-text-module {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .media-text-module.reverse {
+                direction: rtl;
+            }
+
+            .media-text-module.reverse>* {
+                direction: ltr;
+            }
+        }
+
+        .media-container {
+            border-radius: var(--radius);
+            overflow: hidden;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+            aspect-ratio: 16/9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .media-container img,
+        .media-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .placeholder-media {
+            color: var(--muted);
+            font-family: 'JetBrains Mono', monospace;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .text-container {
+            font-size: 1.05rem;
+            color: var(--muted);
+            line-height: 1.8;
+            text-align: justify;
+        }
+
+        .text-container h3 {
+            color: var(--text);
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .text-container ul {
+            padding-left: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .text-container li {
+            margin-bottom: 0.5rem;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            font-weight: 500;
+        }
+
+        /* Menu Grid Styles */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin-bottom: 4rem;
+        }
+
+        @media (min-width: 768px) {
+            .menu-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .menu-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 2rem;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .menu-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            border-color: #6a9955;
+        }
+
+        .menu-card h3 {
+            margin: 0;
+            font-size: 1.5rem;
+            color: var(--text);
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .menu-card p {
+            color: var(--muted);
+            font-size: 1rem;
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        /* Tutorial View Styles */
+        .tutorial-view {
+            display: none;
+            animation: fadeIn 0.4s ease forwards;
+        }
+
+        .tutorial-view>.back-link {
+            display: none !important;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .tutorial-module {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .tutorial-module .media-container {
+            width: 100%;
+        }
+
+        .tutorial-module .text-container {
+            width: 100%;
+        }
+
+        /* Animated Flowchart Styles */
+        .data-flow-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 4rem 1rem;
+            background: var(--surface);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            margin-bottom: 4rem;
+            position: relative;
+            overflow-x: auto;
+            overflow-y: hidden;
+            box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.02);
+        }
+
+        .data-flow-container::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-size: 30px 30px;
+            background-image: linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+            z-index: 0;
+        }
+
+        .data-node {
+            z-index: 1;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem 2rem;
+            text-align: center;
+            min-width: 220px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+        }
+
+        .data-node:hover {
+            transform: scale(1.05);
+            border-color: #6a9955;
+        }
+
+        .data-node.core {
+            background: #111;
+            color: white;
+            border: none;
+            padding: 2rem 3rem;
+        }
+
+        .data-node.core .node-desc {
+            color: #aaa;
+        }
+
+        .node-icon {
+            margin-bottom: 0.5rem;
+            color: #6a9955;
+            display: flex;
+            justify-content: center;
+        }
+
+        .data-node.core .node-icon {
+            color: #fff;
+        }
+
+        .node-name {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .node-desc {
+            font-size: 0.85rem;
+            color: var(--muted);
+        }
+
+        .data-path-vertical {
+            width: 2px;
+            height: 50px;
+            background: var(--border);
+            position: relative;
+            z-index: 1;
+        }
+
+        .data-pulse {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 8px;
+            height: 8px;
+            background: #6a9955;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #6a9955;
+            animation: pulseMove 1.5s infinite linear;
+        }
+
+        .data-pulse.fast {
+            animation-duration: 0.8s;
+            background: #ffaa00;
+            box-shadow: 0 0 10px #ffaa00;
+        }
+
+        @keyframes pulseMove {
+            0% {
+                top: 0;
+                opacity: 1;
+            }
+
+            100% {
+                top: 100%;
+                opacity: 0;
+            }
+        }
+
+        .flow-row {
+            display: flex;
+            gap: 2rem;
+            z-index: 1;
+        }
+
+        @media (min-width: 768px) {
+            .flow-row {
+                gap: 4rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .flow-row:not(.keep-row) {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+
+            .keep-row {
+                min-width: 700px;
+                padding: 0 1rem;
+            }
+
+            .path-group {
+                flex-direction: column;
+                gap: 0 !important;
+            }
+
+            .path-group .data-path-vertical:nth-child(2) {
+                display: none;
+            }
+        }
+
+        /* Fullscreen Hover & Lightbox Styles */
+        .fullscreen-btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .fullscreen-btn:hover {
+            background: rgba(0, 0, 0, 0.9);
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+
+        .media-container:hover .fullscreen-btn {
+            opacity: 1;
+        }
+
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox-content {
+            max-width: 90vw;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 40px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            line-height: 1;
+            z-index: 10000;
+            transition: transform 0.2s;
+        }
+
+        .lightbox-close:hover {
+            transform: scale(1.2);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- ═══ NAVBAR ═══ -->
+    <nav class="nav">
+        <div class="container">
+            <div class="nav-logo">Modules<span>.</span></div>
+            <ul class="nav-links">
+                <li><a href="index.html#glance">At a Glance</a></li>
+                <li><a href="index.html#experience">Experience</a></li>
+                <li><a href="index.html#work">Projects</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+                <li><button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle Dark Mode"><i
+                            data-lucide="moon"></i></button></li>
+                <li>
+                    <div id="realtime-clock" class="nav-clock"></div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container" style="padding-top: 120px; display: flex; gap: 1rem;">
+        <a id="back-to-portfolio-btn" href="index.html#work" class="back-link btn-outline"
+            style="padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid var(--border);">&larr; Back to
+            Portfolio</a>
+        <button id="global-back-to-modules-btn" class="back-link btn-outline"
+            style="display: none; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid var(--border); background: transparent; cursor: pointer; font-family: inherit; font-size: inherit;">&larr;
+            Back to
+            Modules</button>
+    </div>
+
+    <!-- ═══ TORCH MOTION DETAILS ═══ -->
+    <section id="proj-torch" class="project-detail-section">
+        <div class="container">
+            <!-- MENU VIEW -->
+            <div id="torch-menu-view">
+                <div class="project-header-module reveal">
+                    <h1>Torch Motion Ecosystem</h1>
+                    <p class="section-sub" style="margin: 0 auto; text-align: center;">Hold your breath, lets dive deep.
+                    </p>
+                </div>
+                <div class="menu-grid reveal">
+                    <button class="menu-card" onclick="showProjectDetail('torch-menu-view','detail-framework')">
+                        <h3>Torch Motion Framework</h3>
+                        <p> End to End workflow</p>
+                    </button>
+                    <button class="menu-card" onclick="showProjectDetail('torch-menu-view','detail-tom-code')">
+                        <h3>ToM Code</h3>
+                        <p>Proprietary path programming language</p>
+                    </button>
+                    <button class="menu-card" onclick="showProjectDetail('torch-menu-view','detail-tom-slicer')">
+                        <h3>ToM Slicer</h3>
+                        <p>Python-based slicing engine</p>
+                    </button>
+                    <button class="menu-card" onclick="showProjectDetail('torch-menu-view','detail-digital-twin')">
+                        <h3>Digital Twin</h3>
+                        <p>A priori simulation and virtual validation</p>
+                    </button>
+                    <button class="menu-card" onclick="showProjectDetail('torch-menu-view','detail-experiments')">
+                        <h3>Experiments Conducted</h3>
+                        <p>several research experiments conducted</p>
+                    </button>
+                </div>
+            </div>
+
+            <!-- DETAIL VIEWS -->
+
+            <!-- Framework Detail -->
+            <div id="detail-framework" class="tutorial-view">
+                <button class="back-link btn-outline" onclick="showProjectMenu('torch-menu-view')">&larr; Back to
+                    Modules</button>
+                <div class="project-header-module">
+                    <h1>Torch Motion Framework</h1>
+                </div>
+
+                <!-- Animated Flowchart -->
+                <div class="data-flow-container">
+                    <div class="flow-row keep-row" style="align-items: stretch; width: 100%;">
+                        <!-- Automated Pipeline Chain -->
+                        <div style="display: flex; flex-direction: column; align-items: center; flex: 1;">
+                            <div class="data-node" style="min-width: 180px; padding: 1rem; width: 100%;">
+                                <div class="node-icon" style="margin-bottom: 0.2rem;"><i data-lucide="box"
+                                        style="width: 20px; height: 20px;"></i></div>
+                                <div class="node-name" style="font-size: 0.95rem;">3D STL Model</div>
+                            </div>
+                            <div class="data-path-vertical" style="height: 25px; min-height: 25px;">
+                                <div class="data-pulse"></div>
+                            </div>
+
+                            <div class="data-node" style="min-width: 180px; padding: 1rem; width: 100%;">
+                                <div class="node-icon" style="margin-bottom: 0.2rem;"><i data-lucide="layers"
+                                        style="width: 20px; height: 20px;"></i></div>
+                                <div class="node-name" style="font-size: 0.95rem;">ToM Slicer</div>
+                            </div>
+                            <div class="data-path-vertical" style="height: 25px; min-height: 25px;">
+                                <div class="data-pulse"></div>
+                            </div>
+
+                            <div class="data-node" style="min-width: 180px; padding: 1rem; width: 100%;">
+                                <div class="node-icon" style="margin-bottom: 0.2rem;"><i data-lucide="file-code"
+                                        style="width: 20px; height: 20px;"></i></div>
+                                <div class="node-name" style="font-size: 0.95rem;">ToM Code</div>
+                                <div class="node-desc">Automated Path</div>
+                            </div>
+                        </div>
+
+                        <!-- Manual ToM Code Pipeline -->
+                        <div style="display: flex; flex-direction: column; align-items: center; flex: 1;">
+                            <div class="data-node" style="min-width: 180px; padding: 1rem; width: 100%;">
+                                <div class="node-icon" style="margin-bottom: 0.2rem;"><i data-lucide="file-edit"
+                                        style="width: 20px; height: 20px;"></i></div>
+                                <div class="node-name" style="font-size: 0.95rem;">ToM Code</div>
+                                <div class="node-desc">Manually Written</div>
+                            </div>
+                            <div class="data-path-vertical" style="flex-grow: 1; min-height: 25px;">
+                                <div class="data-pulse" style="animation-delay: 0.4s;"></div>
+                            </div>
+                        </div>
+
+                        <!-- Manual Joystick Pipeline -->
+                        <div style="display: flex; flex-direction: column; align-items: center; flex: 1;">
+                            <div class="data-node" style="min-width: 180px; padding: 1rem; width: 100%;">
+                                <div class="node-icon" style="margin-bottom: 0.2rem;"><i data-lucide="gamepad-2"
+                                        style="width: 20px; height: 20px;"></i></div>
+                                <div class="node-name" style="font-size: 0.95rem;">Joystick Control</div>
+                                <div class="node-desc">Direct Control</div>
+                            </div>
+                            <div class="data-path-vertical" style="flex-grow: 1; min-height: 25px;">
+                                <div class="data-pulse" style="animation-delay: 0.8s;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Convergence Bus -->
+                    <style>
+                        .flow-bus-line {
+                            position: absolute;
+                            top: 25px;
+                            height: 2px;
+                            background: rgba(0, 0, 0, 0.1);
+                        }
+
+                        .flow-bus-left {
+                            left: 50%;
+                            right: -1rem;
+                        }
+
+                        .flow-bus-center {
+                            left: -1rem;
+                            right: -1rem;
+                        }
+
+                        .flow-bus-right {
+                            left: -1rem;
+                            right: 50%;
+                        }
+
+                        @media (min-width: 768px) {
+                            .flow-bus-left {
+                                right: -2rem;
+                            }
+
+                            .flow-bus-center {
+                                left: -2rem;
+                                right: -2rem;
+                            }
+
+                            .flow-bus-right {
+                                left: -2rem;
+                            }
+                        }
+                    </style>
+                    <div class="flow-row keep-row"
+                        style="margin-top: 0; align-items: flex-start; width: 100%; z-index: 1;">
+                        <div style="flex: 1; position: relative; height: 50px;">
+                            <div class="data-path-vertical" style="height: 25px; margin: 0 auto;">
+                                <div class="data-pulse"></div>
+                            </div>
+                            <div class="flow-bus-line flow-bus-left"></div>
+                        </div>
+                        <div style="flex: 1; position: relative; height: 50px;">
+                            <div class="data-path-vertical" style="height: 50px; margin: 0 auto;">
+                                <div class="data-pulse" style="animation-delay: 0.4s;"></div>
+                            </div>
+                            <div class="flow-bus-line flow-bus-center"></div>
+                        </div>
+                        <div style="flex: 1; position: relative; height: 50px;">
+                            <div class="data-path-vertical" style="height: 25px; margin: 0 auto;">
+                                <div class="data-pulse" style="animation-delay: 0.8s;"></div>
+                            </div>
+                            <div class="flow-bus-line flow-bus-right"></div>
+                        </div>
+                    </div>
+
+                    <div class="data-node core">
+                        <div class="node-icon"><i data-lucide="cpu" style="width: 32px; height: 32px;"></i></div>
+                        <div class="node-name">Torch Motion Controller</div>
+                        <div class="node-desc">Raspberry Pi 5</div>
+                    </div>
+
+                    <div class="path-group flow-row keep-row" style="display:flex; gap: 14rem; z-index:1;">
+                        <div class="data-path-vertical">
+                            <div class="data-pulse fast"></div>
+                        </div>
+                        <div class="data-path-vertical">
+                            <div class="data-pulse fast" style="animation-delay: 0.2s;"></div>
+                        </div>
+                    </div>
+
+                    <div class="flow-row keep-row">
+                        <div class="data-node">
+                            <div class="node-icon"><i data-lucide="move"></i></div>
+                            <div class="node-name">Cartesian Robot</div>
+
+                        </div>
+                        <div class="data-node">
+                            <div class="node-icon"><i data-lucide="zap"></i></div>
+                            <div class="node-name">MIG Power Source</div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Framework Text Content -->
+                <div class="tutorial-module">
+                    <div class="text-container" style="display: flex; flex-direction: column; gap: 3rem;">
+
+                        <div>
+                            <h3>Torch Motion Controller</h3>
+                            <p>Serving as the centralized brain of the robot, the Torch Motion Controller (running on a
+                                Raspberry Pi 5) is a high-performance interpreter custom-built from the ground up for
+                                additive manufacturing. It operates through two distinct execution pipelines:</p>
+                            <ul>
+                                <li><strong>Automated Pipeline:</strong> <code>STL File</code> &rarr;
+                                    <code>ToM Slicer</code> &rarr; <code>ToM Code</code> &rarr;
+                                    <code>Controller</code>. The controller parses the
+                                    instructions and dynamically translates Cartesian trajectories into precise motor
+                                    pulses and orchestrates real-time serial communication with the weld triggers.
+                                </li>
+                                <li><strong>Manual/Direct Pipeline:</strong> The controller can be invoked directly by
+                                    feeding hand-written program attributes
+                                    or driven interactively using a
+                                    hardware joystick interface.</li>
+                            </ul>
+                            <p>By bypassing conventional generic G-code limitations, it utilizes a specialized execution
+                                loop categorized into configuration (<code>set</code>), timing (<code>wait</code>), and
+                                execution (<code>torch</code>) states, natively computing advanced trapezoidal velocity
+                                profiles.</p>
+                        </div>
+
+                        <div>
+                            <h3>Wire Arc Additive Manufacturing</h3>
+                            <p>Leveraging the high deposition rates and material efficiency of Wire Arc Additive
+                                Manufacturing (WAAM), this system was developed to autonomously repair damaged railway
+                                tracks. By integrating a continuous welding arc with precise robotic kinematics, the
+                                system deposits 3D metal structures layer by layer.</p>
+                            <p>This approach solves critical rail maintenance challenges by replacing manual
+                                interventions with a fully automated, closed-loop repair pipeline, ensuring superior
+                                bead geometry and consistent metallurgical integrity.</p>
+                        </div>
+
+                        <div>
+                            <h3>Custom Cartesian Robot</h3>
+                            <p>At the core of the physical execution is a custom-engineered, CNC-based 3-axis Cartesian
+                                robot, developed for an MSME-funded project under the guidance of Dr. Vikranth Racherla,
+                                professor and Head of Center for Railway Research at IIT Kharagpur. The robot boasts a
+                                modular end-effector architecture capable of autonomous Laser profilometry, selective
+                                WAAM repair, and mechanical post-processing</p>
+                            <ul>
+                                <li>Disruptively cost-effective and flexiblity in accesibility, for small-scale
+                                    operations.</li>
+                                <li>Robust closed-loop motion control leveraging high-resolution stepper encoders.</li>
+                                <li>End-to-end autonomous execution requiring zero manual intervention during active
+                                    cycles.</li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <h3>MIG Welding Power Sources</h3>
+                            <p>To achieve industrial-grade deposition, the architecture integrates seamlessly with
+                                standard Metal Inert Gas (MIG/GMAW) welding power sources. Transforming a manual welder
+                                into an autonomous manufacturing tool required engineering a custom relay-based
+                                controller.</p>
+                            <p>This interface taps directly into the welder's trigger circuit, enabling
+                                microsecond-precision arc activation synchronized with multi-axis robotic movements.
+                                This tight hardware integration unlocks the ability to execute complex, multi-pass
+                                deposition strategies flawlessly.</p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- ToM Code Detail -->
+            <div id="detail-tom-code" class="tutorial-view">
+                <div class="project-header-module">
+                    <h1>ToM Code</h1>
+                </div>
+
+                <div class="tutorial-module">
+                    <div class="text-container" style="margin-top: 1rem;">
+                        <h3>Proprietary Path Language</h3>
+                        <p>To overcome the limitations of standard CNC programming in welding environments, I
+                            architected
+                            <strong>ToM (Torch Motion) Code</strong>—a proprietary, domain-specific path language.
+                            Unlike generic G-code which relies on obscure letter-number combinations (like G0, G1,
+                            M104),
+                            ToM code uses human-readable, explicit keywords tailored specifically for Wire Arc Additive
+                            Manufacturing (WAAM).
+                        </p>
+                        <p>This semantic design elegance abstracts the immense complexity of synchronized multi-axis
+                            kinematics and
+                            arc state management into a highly intuitive syntax, drastically reducing the learning curve
+                            and making manual program adjustments on the shop floor effortless.</p>
+
+                        <h4 style="margin-top: 1.5rem; color: var(--text); font-family: 'Space Grotesk', sans-serif;">
+                            The Core Keywords</h4>
+                        <ul>
+                            <li><strong>set</strong>: Configuration commands that define the environment.
+                                <ul style="margin-top: 0.5rem;">
+                                    <li><code>set home</code>: Sets the current physical location as the absolute zero
+                                        reference.</li>
+                                    <li><code>set mvel10 svel5</code>: Establishes the motion velocity (mvel) and slow
+                                        velocity (svel) in mm/s.</li>
+                                </ul>
+                            </li>
+                            <li><strong>torch</strong>: Execution commands that handle kinematics and arc triggers.
+                                <ul style="margin-top: 0.5rem;">
+                                    <li><code>torch move</code>: Commands linear Cartesian trajectories (e.g.,
+                                        <code>torch move x100e y50e mvel</code>).
+                                    </li>
+                                    <li><code>torch wa</code> / <code>torch wua</code>: Explicitly toggles the Weld Arm
+                                        active (arc ON) or inactive (arc OFF), maintaining perfect synchronization with
+                                        the axes.</li>
+                                </ul>
+                            </li>
+                            <li><strong>wait</strong>: Explicit timing states crucial for WAAM processes like inter-pass
+                                cooling and shielding gas pre-flow delays (<code>wait 2s</code>).</li>
+                            <li><strong>terminate</strong>: Safely ends the program sequence, powering down motion
+                                drivers and ensuring the welding arc is completely cut off.</li>
+                        </ul>
+
+                        <h3 style="margin-top: 3rem;">Code &amp; Simulation Flow</h3>
+                        <p style="margin-bottom: 1.5rem;">Below is a sample of our proprietary ToM Code translating
+                            directly into simulated trajectories:</p>
+                        <div
+                            style="display: flex; flex-direction: column; gap: 2rem; width: 100%; margin-bottom: 2rem;">
+                            <div class="media-container"
+                                style="aspect-ratio: auto; padding: 0.5rem; background: var(--surface);">
+                                <img src="assets/ToM_code.png" alt="ToM Code Snippet"
+                                    style="width: 100%; height: auto; border-radius: 8px;">
+                            </div>
+                            <div class="media-container"
+                                style="aspect-ratio: auto; padding: 0.5rem; background: var(--surface);">
+                                <img src="assets/ToM_code_sim.png" alt="ToM Code Path Simulation"
+                                    style="width: 100%; height: auto; border-radius: 8px;">
+                            </div>
+                        </div>
+
+                        <h3 style="margin-top: 3rem;">Deterministic Encoder Logic (The 'e' Unit)</h3>
+                        <p>A major advantage of the Torch Motion controller is its direct interaction with hardware
+                            through the explicit encoder unit method. Rather than relying purely on floating-point
+                            millimeter coordinates which can suffer from rounding errors during microcontroller
+                            translation, ToM code commands utilize explicit encoder formats denoted by the
+                            <code>e</code> suffix.
+                        </p>
+
+                        <div
+                            style="background: rgba(37, 99, 235, 0.05); border-left: 4px solid var(--accent); padding: 1.5rem; margin: 1.5rem 0; border-radius: 0 8px 8px 0;">
+                            <h4
+                                style="margin-bottom: 0.5rem; font-family: 'Space Grotesk', sans-serif; color: var(--accent);">
+                                Mathematical Calculation of 'e'</h4>
+                            <p style="margin-bottom: 0;">By defining the system resolution—for instance,
+                                <code>set res 1e 1.0</code> (1 encoder unit = 1 mm)—ToM code elegantly maps physical
+                                distances to precise motor pulses based on hardware properties.
+                            </p>
+                            <p
+                                style="margin-top: 0.75rem; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; padding: 0.5rem; background: rgba(255,255,255,0.5); border-radius: 4px; border: 1px solid rgba(0,0,0,0.05);">
+                                Formula: Motor Pulses = Target Distance &times; (PPR / Lead)
+                            </p>
+                            <p style="margin-top: 0.75rem; margin-bottom: 0;">
+                                If a target distance is <strong>50 encoder units</strong> (e.g., 50 mm), the host PC
+                                pre-calculates the exact motor steps:<br>
+                                <span
+                                    style="font-family: 'JetBrains Mono', monospace; color: var(--accent-2); font-weight: 600;">Pulses
+                                    = 50 &times; (Pulses/Rev &divide; Lead)</span>
+                            </p>
+                            <p style="margin-top: 0.75rem; margin-bottom: 0;">
+                                For negative trajectories designated by an <code>n</code> prefix, such as
+                                <code>xn50e</code>, the microcontroller doesn't receive a negative float. Instead, it
+                                receives the absolute pulse count along with an explicit <strong>DIR pin
+                                    command</strong> (e.g., <code>CCW</code>) to instantly reverse the motor direction.
+                            </p>
+                        </div>
+
+                        <p>By pre-calculating the exact number of motor steps on the host PC and passing integers
+                            directly to the microcontroller, we shift the computational burden off the embedded
+                            hardware. This ensures perfectly deterministic and repeatable robotic positioning with
+                            zero-latency operation, a critical requirement for maintaining high-quality, stackable weld
+                            bead geometries.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ToM Slicer Detail -->
+            <div id="detail-tom-slicer" class="tutorial-view">
+                <button class="back-link btn-outline" onclick="showProjectMenu('torch-menu-view')">&larr; Back to
+                    Modules</button>
+                <div class="project-header-module">
+                    <h1>ToM Slicer</h1>
+                </div>
+
+                <!-- Introduction and Slicer 1 Image -->
+                <div class="tutorial-module">
+                    <div class="text-container" style="margin-bottom: 2rem;">
+                        <h3>Slicing Engine for WAAM</h3>
+                        <p>The <strong>ToM Slicer</strong> is a robust Python-based desktop application engineered to
+                            translate complex 3D STL geometries directly into executable ToM Code. Unlike standard
+                            thermoplastic slicers, this pipeline is fundamentally optimized for the metallurgical
+                            realities of Wire Arc Additive Manufacturing (WAAM).</p>
+                    </div>
+                    <div class="media-container"
+                        style="max-width: 1000px; margin: 0 auto; aspect-ratio: auto; height: auto; background: transparent; border: none; box-shadow: none;">
+                        <img src="assets/slicer1.png" alt="ToM Slicer Interface"
+                            style="width: 100%; height: auto; border-radius: 8px;">
+                    </div>
+                </div>
+
+                <!-- Slicer 2: Geometry/Deposition (Text Left, Image Right -> Right-Left pattern) -->
+                <div class="tutorial-module" style="margin-top: 4rem;">
+                    <div style="display: flex; flex-wrap: wrap; gap: 2rem; align-items: center;">
+                        <div class="text-container" style="flex: 1; min-width: 300px;">
+                            <h3>Deposition &amp; Slicing Parameters</h3>
+                            <p>The core geometry of the build is governed by specific deposition parameters extracted
+                                from empirical data. The UI allows users to directly set these constraints:</p>
+                            <ul>
+                                <li style="margin-bottom: 0.5rem;"><strong>Layer Height</strong>: Dictates the Z-axis
+                                    increment per layer. In WAAM, this must exactly match the average bead height to
+                                    prevent stand-off distance accumulation.</li>
+                                <li style="margin-bottom: 0.5rem;"><strong>Bead Width</strong>: Used to calculate the
+                                    inward polygon offset for perimeters and the spacing for infill paths.</li>
+                                <li style="margin-bottom: 0.5rem;"><strong>Shells &amp; Infill</strong>: Supports
+                                    configurable perimeter shells and multiple infill patterns (Grid, Zigzag,
+                                    Concentric, Honeycomb) governed by an infill density percentage.</li>
+                            </ul>
+                        </div>
+                        <div class="media-container"
+                            style="flex: 1; min-width: 300px; aspect-ratio: auto; height: auto; background: transparent; border: none; box-shadow: none; display: flex; justify-content: center;">
+                            <img src="assets/slicer2.png" alt="Slicer Geometry Parameters"
+                                style="max-height: 400px; width: auto; max-width: 100%; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slicer 3: Usual center -->
+                <div class="tutorial-module" style="margin-top: 4rem;">
+                    <div class="text-container" style="margin-bottom: 2rem;">
+                        <h3>Advanced Toolpath Generation</h3>
+                        <p>Once parameters are set, the engine slices the STL by intersecting planes with the mesh
+                            triangles. It uses the <code>shapely</code> library to robustly offset polygons inward by
+                            half a bead width, ensuring the weld centerline stays within the part's footprint. The
+                            resulting contours and infill lines are stitched into continuous toolpaths to minimize
+                            unnecessary arc-offs.</p>
+                    </div>
+                    <div class="media-container"
+                        style="max-width: 800px; margin: 0 auto; aspect-ratio: auto; height: auto; background: transparent; border: none; box-shadow: none;">
+                        <img src="assets/slicer3.png" alt="Slicer 3D View"
+                            style="width: 100%; height: auto; border-radius: 8px;">
+                    </div>
+                </div>
+
+                <!-- Slicer 4: Motion/Timing (Image Left, Text Right) -->
+                <div class="tutorial-module" style="margin-top: 4rem;">
+                    <div style="display: flex; flex-wrap: wrap-reverse; gap: 2rem; align-items: center;">
+                        <div class="media-container"
+                            style="flex: 1; min-width: 300px; aspect-ratio: auto; height: auto; background: transparent; border: none; box-shadow: none; display: flex; justify-content: center;">
+                            <img src="assets/slicer4.png" alt="Slicer Motion Parameters"
+                                style="max-height: 400px; width: auto; max-width: 100%; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+                        </div>
+                        <div class="text-container" style="flex: 1; min-width: 300px;">
+                            <h3>Motion &amp; Timing Control</h3>
+                            <p>Unlike plastic extrusion, WAAM requires precise thermal management and gas control. The
+                                ToM Slicer injects these critical timings natively into the code:</p>
+                            <ul>
+                                <li style="margin-bottom: 0.5rem;"><strong>Weld &amp; Travel Speeds (<code>mvel</code>,
+                                        <code>svel</code>)</strong>: Independent velocities for active deposition versus
+                                    non-welding rapid moves.</li>
+                                <li style="margin-bottom: 0.5rem;"><strong>Arc On/Off Delays</strong>: Millisecond
+                                    pauses allowing the weld pool to establish or extinguish smoothly.</li>
+                                <li style="margin-bottom: 0.5rem;"><strong>Inter-pass Cooling Delay</strong>: A dwell
+                                    time added between layers to allow the previous hot layer to cool, preventing
+                                    structural collapse.</li>
+                                <li style="margin-bottom: 0.5rem;"><strong>Gas Pre-flow Delay</strong>: Ensures
+                                    shielding gas coverage before striking the initial arc.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slicer 5: Usual center -->
+                <div class="tutorial-module" style="margin-top: 4rem;">
+                    <div class="text-container" style="margin-bottom: 2rem;">
+                        <h3>ToM Code Compilation</h3>
+                        <p>The final output of the Slicer is the compiled ToM Code sequence. The engine constructs the
+                            program block by block—initializing the environment, executing X/Y travel, commanding the
+                            arc triggers, and incrementing the Z-axis. Negative coordinates are automatically encoded
+                            (e.g., <code>xn12.5e</code>) to map directly to hardware directional pins, maintaining
+                            strict deterministic execution.</p>
+                    </div>
+                    <div class="media-container"
+                        style="max-width: 1000px; margin: 0 auto; aspect-ratio: auto; height: auto; background: transparent; border: none; box-shadow: none;">
+                        <img src="assets/slicer5.png" alt="Generated ToM Code"
+                            style="width: 100%; height: auto; border-radius: 8px;">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Digital Twin Detail -->
+            <div id="detail-digital-twin" class="tutorial-view">
+                <button class="back-link btn-outline" onclick="showProjectMenu('torch-menu-view')">&larr; Back to
+                    Modules</button>
+                <div class="project-header-module">
+                    <h1>Digital Twin Simulation</h1>
+                </div>
+
+                <!-- Intro text -->
+                <div class="tutorial-module">
+                    <div class="text-container" style="margin-bottom: 2rem;">
+                        <h3>High-Fidelity Virtual Validation</h3>
+                        <p>To eliminate the risk of hardware crashes and material waste, I engineered a comprehensive
+                            <strong>Digital Twin</strong> using PyQt5 and PyOpenGL. This desktop application acts as a
+                            virtual proving ground, parsing the exact ToM Code instructions destined for the physical
+                            robot and rendering the outcomes <em>a priori</em>.
+                        </p>
+                        <p>The simulation engine is composed of several discrete physics and hardware modeling modules
+                            to mirror the real world perfectly:</p>
+                        <ul>
+                            <li style="margin-bottom: 0.5rem;"><strong>Firmware Simulator:</strong> Emulates the exact
+                                trapezoidal motion profiles and acceleration logic of the physical ESP32
+                                microcontrollers.</li>
+                            <li style="margin-bottom: 0.5rem;"><strong>Weld Simulator:</strong> Mimics the
+                                Arduino-driven MIG relay logic, triggering precise delays for gas pre-flow, arc
+                                ignition, and inter-pass cooling.</li>
+                            <li style="margin-bottom: 0.5rem;"><strong>URDF Render Engine:</strong> Dynamically loads
+                                the machine's geometric configuration via a standardized URDF file, driving the 3D
+                                OpenGL visualization.</li>
+                        </ul>
+                    </div>
+                    <!-- Digital Twin Main Windows Collage -->
+                    <div style="max-width: 1000px; margin: 0 auto; width: 100%; display: flex; gap: 1rem;">
+                        <div class="media-container"
+                            style="flex: 1; aspect-ratio: auto; height: auto; background: transparent; border: none; box-shadow: none; padding: 0;">
+                            <img src="assets/DT1.png" alt="Digital Twin Main Window 1"
+                                style="width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+                        </div>
+                        <div class="media-container"
+                            style="flex: 1; aspect-ratio: auto; height: auto; background: transparent; border: none; box-shadow: none; padding: 0;">
+                            <img src="assets/DT2.png" alt="Digital Twin Main Window 2"
+                                style="width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Workflow and Interaction -->
+                <div class="tutorial-module" style="margin-top: 4rem;">
+                    <div style="display: flex; flex-wrap: wrap; gap: 2rem; align-items: center;">
+                        <div class="text-container" style="flex: 1; min-width: 300px;">
+                            <h3>Interactive Workflow &amp; Analysis</h3>
+                            <p>The digital twin provides a seamless UI for loading and validating proprietary `.txt`
+                                Tomo programs. Operators can set specific parameters like the baseline Z gap distance
+                                before triggering the simulation.</p>
+                            <ul>
+                                <li style="margin-bottom: 0.5rem;"><strong>Variable Simulation Speed:</strong> Capable
+                                    of fast-forwarding long additive manufacturing programs (from 1x up to 20x speed).
+                                </li>
+                                <li style="margin-bottom: 0.5rem;"><strong>Visual Differentiation:</strong> Actively
+                                    deposited weld beads are highlighted distinctly from rapid-travel paths, allowing
+                                    engineers to visually inspect multi-layer stacks.</li>
+                                <li style="margin-bottom: 0.5rem;"><strong>Real-time Camera Controls:</strong> Full 3D
+                                    environment interaction including orbital drag, pan, zoom, and instant orthographic
+                                    snaps (Top, Front, Side, Iso views).</li>
+                            </ul>
+                        </div>
+                        <!-- Deposited Weld Beads Image -->
+                        <div class="media-container"
+                            style="flex: 1; min-width: 300px; aspect-ratio: auto; height: auto; background: transparent; border: none; box-shadow: none; display: flex; justify-content: center; padding: 0;">
+                            <img src="assets/DT_weld_deposition.png"
+                                alt="Detailed view of the deposited weld beads vs travel paths"
+                                style="max-height: 400px; width: auto; max-width: 100%; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Video Placeholder -->
+                <div class="tutorial-module" style="margin-top: 4rem;">
+                    <div class="text-container" style="margin-bottom: 2rem; text-align: center;">
+                        <h3>Simulation In Action</h3>
+                        <p style="max-width: 800px; margin: 0 auto; color: var(--muted);">Watch the Digital Twin parse a
+                            complex multi-layer deposition strategy and drive the URDF kinematics in real-time.
+                            <strong>(Shown at 20x simulation speed)</strong>
+                        </p>
+                    </div>
+                    <div class="media-container"
+                        style="max-width: 1000px; margin: 0 auto; width: 100%; aspect-ratio: auto; border: none; background: transparent; padding: 0;">
+                        <video src="assets/DT_simulation_video.mp4" autoplay loop muted playsinline
+                            style="width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);"></video>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Experiments Conducted Detail -->
+            <div id="detail-experiments" class="tutorial-view">
+                <button class="back-link btn-outline" onclick="showProjectMenu('torch-menu-view')">&larr; Back to
+                    Modules</button>
+                <div class="project-header-module">
+                    <h1>Experimental Validation</h1>
+                </div>
+
+                <!-- 250+ Depositions & Parameters -->
+                <div class="tutorial-module">
+                    <div class="text-container" style="margin-bottom: 2rem;">
+                        <h3>250+ Empirical Depositions</h3>
+                        <p>To bridge the gap between theoretical software models and real-world manufacturing, I
+                            conducted over <strong>250 rigorous empirical deposition experiments</strong>. By
+                            systematically manipulating key process variables, I generated a comprehensive dataset
+                            mapping machine states directly to metallurgical geometries. Below is a sample snippet of
+                            the recorded process parameters and resulting bead dimensions:</p>
+                    </div>
+
+                    <div class="table-container"
+                        style="overflow-x: auto; margin-bottom: 2rem; background: var(--surface); border-radius: 8px; border: 1px solid var(--border); padding: 1rem;">
+                        <table
+                            style="width: 100%; border-collapse: collapse; text-align: left; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem;">
+                            <thead>
+                                <tr style="border-bottom: 2px solid var(--border); color: var(--text);">
+                                    <th style="padding: 0.75rem;">Exp No.</th>
+                                    <th style="padding: 0.75rem;">Current (A)</th>
+                                    <th style="padding: 0.75rem;">Voltage (V)</th>
+                                    <th style="padding: 0.75rem;">Velocity (mm/s)</th>
+                                    <th style="padding: 0.75rem;">WFR (m/min)</th>
+                                    <th style="padding: 0.75rem;">Bead Width (mm)</th>
+                                    <th style="padding: 0.75rem;">Bead Height (mm)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-bottom: 1px solid var(--border);">
+                                    <td style="padding: 0.75rem;">1</td>
+                                    <td style="padding: 0.75rem;">180</td>
+                                    <td style="padding: 0.75rem;">26.5</td>
+                                    <td style="padding: 0.75rem;">4.0</td>
+                                    <td style="padding: 0.75rem;">7.0</td>
+                                    <td style="padding: 0.75rem; color: var(--accent-2);">8.18</td>
+                                    <td style="padding: 0.75rem; color: var(--accent-2);">1.83</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid var(--border);">
+                                    <td style="padding: 0.75rem;">2</td>
+                                    <td style="padding: 0.75rem;">180</td>
+                                    <td style="padding: 0.75rem;">26.5</td>
+                                    <td style="padding: 0.75rem;">3.0</td>
+                                    <td style="padding: 0.75rem;">7.0</td>
+                                    <td style="padding: 0.75rem; color: var(--accent-2);">2.23</td>
+                                    <td style="padding: 0.75rem; color: var(--accent-2);">2.94</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid var(--border);">
+                                    <td style="padding: 0.75rem;">3</td>
+                                    <td style="padding: 0.75rem;">180</td>
+                                    <td style="padding: 0.75rem;">26.5</td>
+                                    <td style="padding: 0.75rem;">6.0</td>
+                                    <td style="padding: 0.75rem;">7.0</td>
+                                    <td style="padding: 0.75rem; color: var(--accent-2);">6.56</td>
+                                    <td style="padding: 0.75rem; color: var(--accent-2);">2.66</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid var(--border);">
+                                    <td style="padding: 0.75rem;">4</td>
+                                    <td style="padding: 0.75rem;">180</td>
+                                    <td style="padding: 0.75rem;">26.5</td>
+                                    <td style="padding: 0.75rem;">8.0</td>
+                                    <td style="padding: 0.75rem;">7.0</td>
+                                    <td style="padding: 0.75rem; color: var(--accent-2);">7.43</td>
+                                    <td style="padding: 0.75rem; color: var(--accent-2);">2.67</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 0.75rem;">5</td>
+                                    <td style="padding: 0.75rem;">190</td>
+                                    <td style="padding: 0.75rem;">27.2</td>
+                                    <td style="padding: 0.75rem;">4.0</td>
+                                    <td style="padding: 0.75rem;">7.0</td>
+                                    <td style="padding: 0.75rem; color: var(--accent-2);">9.62</td>
+                                    <td style="padding: 0.75rem; color: var(--accent-2);">3.09</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Dry Run (Image Left, Video Right) -->
+                <div class="tutorial-module" style="margin-top: 4rem;">
+                    <div class="text-container" style="margin-bottom: 2rem;">
+                        <h3>Dry Run Execution</h3>
+                        <p>Before initiating a live arc, physical hardware dry runs were conducted using the exact
+                            motion sequences generated by the ToM Slicer. This crucial step validates the deterministic
+                            <code>e</code> encoder mappings on the physical gantry, ensuring toolpath integrity and
+                            collision avoidance without risking a catastrophic burn-through on the print bed.
+                        </p>
+                    </div>
+                    <div style="display: flex; flex-wrap: wrap; gap: 2rem;">
+                        <div class="media-container"
+                            style="flex: 1; min-width: 300px; aspect-ratio: auto; border: none; background: transparent; padding: 0;">
+                            <img src="assets/dry_run.jpg" alt="Dry Run Hardware"
+                                style="width: 100%; height: auto; border-radius: 8px;">
+                        </div>
+                        <div class="media-container"
+                            style="flex: 1; min-width: 300px; aspect-ratio: auto; border: none; background: transparent; padding: 0;">
+                            <video src="assets/dry_run_video.mp4" autoplay loop muted playsinline
+                                style="width: 100%; height: auto; border-radius: 8px;"></video>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Overlap Deposition -->
+                <div class="tutorial-module" style="margin-top: 4rem;">
+                    <div class="text-container" style="margin-bottom: 2rem;">
+                        <h3>Overlap &amp; Multi-Pass Deposition</h3>
+                        <p>Moving beyond single beads, the system's true capability lies in overlapping layers to
+                            construct dense 3D volumes. By feeding back the empirical bead dimensions into the slicer,
+                            the system calculates precise step-over offsets, preventing underfill gaps or excessive
+                            material pile-up during complex multi-pass trajectories.</p>
+                    </div>
+                    <div class="media-container"
+                        style="max-width: 1000px; margin: 0 auto; width: 100%; aspect-ratio: auto; border: none; background: transparent;">
+                        <video src="assets/overlap.mp4" autoplay loop muted playsinline
+                            style="width: 100%; height: auto; border-radius: 8px;"></video>
+                    </div>
+                </div>
+
+                <!-- Confidential Note -->
+                <div class="tutorial-module" style="margin-top: 4rem;">
+                    <div class="text-container"
+                        style="text-align: center; font-style: italic; color: var(--muted); padding: 2rem; border-top: 1px solid var(--border);">
+                        <p>Note: Detailed results of several other advanced metallurgical and stress-strain experiments
+                            are currently confidential and proprietary.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ═══ LASER PROFILOMETRY DETAILS ═══ -->
+    <section id="proj-laser" class="project-detail-section">
+        <div class="container">
+            <!-- MENU VIEW -->
+            <div id="laser-menu-view">
+                <div class="project-header-module reveal">
+                    <h1>Laser Profilometer</h1>
+                    <p class="section-sub" style="margin: 0 auto; text-align: center;">Deep dive into the non-contact
+                        optical metrology method for weld bead measurement.</p>
+                </div>
+                <div class="menu-grid reveal">
+                    <button class="menu-card" onclick="showProjectDetail('laser-menu-view', 'detail-laser-1')">
+                        <h3>Batch Architecture</h3>
+                        <p>High-throughput optical processing</p>
+                    </button>
+                    <button class="menu-card" onclick="showProjectDetail('laser-menu-view', 'detail-laser-2')">
+                        <h3>Mathematical Metrology</h3>
+                        <p>Algorithms for precision extraction</p>
+                    </button>
+                    <button class="menu-card" onclick="showProjectDetail('laser-menu-view', 'detail-laser-3')">
+                        <h3>Dataset Generation</h3>
+                        <p>Automated ML-ready data structuring</p>
+                    </button>
+                    <button class="menu-card" onclick="showProjectDetail('laser-menu-view', 'detail-laser-4')">
+                        <h3>Results & Analysis</h3>
+                        <p>Deposition and processed outcomes</p>
+                    </button>
+                </div>
+            </div>
+
+            <!-- DETAIL VIEWS -->
+
+            <!-- Detail 1: Batch Processing -->
+            <div id="detail-laser-1" class="tutorial-view">
+                <button class="back-link btn-outline" onclick="showProjectMenu('laser-menu-view')">&larr; Back to
+                    Modules</button>
+                <div class="project-header-module">
+                    <h1>Batch Processing Architecture</h1>
+                </div>
+                <div class="tutorial-module">
+                    <div class="text-container" style="margin-bottom: 2rem;">
+                        <h3>High-Throughput Optical Pipeline</h3>
+                        <p>To process thousands of weld cross-section images efficiently, I developed an optimized,
+                            headless Python pipeline capable of <strong>Batch</strong> processing. It recursively
+                            iterates through complex folder hierarchies, managing memory via targeted image caching
+                            rather than redundant disk I/O.</p>
+                        <p>The processing architecture follows a strict, deterministic 5-stage protocol for every
+                            captured image:</p>
+                        <ul>
+                            <li style="margin-bottom: 0.5rem;"><strong>Stage 1 (Ingestion):</strong> Rapid memory
+                                loading and image matrix initialization.</li>
+                            <li style="margin-bottom: 0.5rem;"><strong>Stage 2 (Skeletonization):</strong> Compressing
+                                the laser's thickness to a single sub-pixel line.</li>
+                            <li style="margin-bottom: 0.5rem;"><strong>Stage 3 (Green Channel Profiling):</strong>
+                                Isolating the laser spectrum to generate an unbroken Cartesian polyline.</li>
+                            <li style="margin-bottom: 0.5rem;"><strong>Stage 4 (Plateau Detection):</strong> Identifying
+                                the base metal reference plane dynamically.</li>
+                            <li style="margin-bottom: 0.5rem;"><strong>Stage 5 (Extraction):</strong> Deriving true
+                                geometric attributes (Width, Peak Height, Trajectories).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detail 2: Mathematical Extraction -->
+            <div id="detail-laser-2" class="tutorial-view">
+                <button class="back-link btn-outline" onclick="showProjectMenu('laser-menu-view')">&larr; Back to
+                    Modules</button>
+                <div class="project-header-module">
+                    <h1>Mathematical Metrology</h1>
+                </div>
+                <div class="tutorial-module">
+                    <div class="text-container" style="margin-bottom: 2rem;">
+                        <h3>Derivative-Based Plateau Detection</h3>
+                        <p>A critical algorithmic challenge in automated laser profilometry is dynamically identifying
+                            the flat reference plate directly beneath the weld bead, especially when the plate itself
+                            may be angled or distorted. The algorithm applies a 1D Gaussian filter to smooth out noise
+                            in the raw pixel profile array <em>Y<sub>px</sub></em>, computing the smoothed dataset:
+                            <em>Y<sub>smooth</sub> = G(Y<sub>px</sub>, &sigma;)</em>.
+                        </p>
+                        <p>By computing the discrete numerical derivative <em>&Delta;Y<sub>smooth</sub></em>, the
+                            algorithm robustly isolates "spikes" (weld contours) and "flats" (the reference plate) by
+                            thresholding the slope gradient. Continuous flat segments are clustered together, and an
+                            averaged reference depth is established dynamically, making the system highly robust against
+                            imperfect physical camera alignment.</p>
+                    </div>
+
+                    <div
+                        style="background: rgba(37, 99, 235, 0.05); border-left: 4px solid var(--accent); padding: 1.5rem; margin: 1.5rem 0; border-radius: 0 8px 8px 0;">
+                        <h4
+                            style="margin-bottom: 0.5rem; font-family: 'Space Grotesk', sans-serif; color: var(--accent);">
+                            Sub-Pixel Skeletonization</h4>
+                        <p style="margin-bottom: 0;">To achieve maximal optical precision, the thick, bloomed laser line
+                            is mathematically reduced to a single-pixel skeleton utilizing a weighted average of
+                            intensity distributions across each pixel column. Rather than naively picking the absolute
+                            brightest peak, the true center is interpolated:</p>
+                        <p
+                            style="margin-top: 0.75rem; font-family: 'JetBrains Mono', monospace; font-size: 0.95rem; padding: 0.5rem; background: rgba(255,255,255,0.5); border-radius: 4px; border: 1px solid rgba(0,0,0,0.05); text-align: center;">
+                            y<sub>center</sub> = &Sigma; ( y<sub>i</sub> &times; I<sub>i</sub> ) / &Sigma; I<sub>i</sub>
+                        </p>
+                        <p style="margin-top: 0.75rem; margin-bottom: 0;">Where <strong>y<sub>i</sub></strong> is the
+                            row coordinate index and <strong>I<sub>i</sub></strong> is the local pixel intensity,
+                            yielding reliable sub-pixel accuracy that neutralizes unpredictable beam dispersion.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detail 3: Dataset Generation -->
+            <div id="detail-laser-3" class="tutorial-view">
+                <button class="back-link btn-outline" onclick="showProjectMenu('laser-menu-view')">&larr; Back to
+                    Modules</button>
+                <div class="project-header-module">
+                    <h1>Automated Dataset Generation</h1>
+                </div>
+                <div class="tutorial-module">
+                    <div class="text-container" style="margin-bottom: 2rem;">
+                        <h3>Bridging Metrology and Machine Learning</h3>
+                        <p>The core objective of the entire profilometry system is to autonomously supply high-quality
+                            training data for the downstream neural network models. The pipeline was designed
+                            specifically to cross-reference the extracted geometric measurements with the initial
+                            <strong>Design of Experiments (DOE)</strong> matrix without human intervention.
+                        </p>
+                        <p>Upon completing the final image extraction batch, the algorithm matches the physical
+                            independent variables (Current, Voltage, Welding Speed) directly with the averaged physical
+                            outcomes (Peak Bead Height, Average Bead Width) to instantly generate a master comprehensive
+                            CSV.</p>
+
+                        <div class="media-container"
+                            style="background: var(--surface); padding: 1.5rem; border: 1px dashed var(--border); box-shadow: inset 0 0 10px rgba(0,0,0,0.02); aspect-ratio: auto; margin-top: 2rem; display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-start; overflow-x: auto;">
+                            <h4
+                                style="font-family: 'JetBrains Mono', monospace; margin-bottom: 1rem; color: var(--text); font-size: 1rem;">
+                                model_training_dataset.csv Output</h4>
+                            <p
+                                style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: var(--muted); line-height: 1.8; margin: 0; white-space: nowrap;">
+                                <strong style="color: var(--text);">weldment_no, Current, Voltage, Welding_speed,
+                                    Avg_Bead_Height, Avg_Bead_Width</strong><br>
+                                1, 180, 26.5, 4.0, 1.8341, 8.1820<br>
+                                2, 180, 26.5, 3.0, 2.9430, 2.2351<br>
+                                3, 180, 26.5, 6.0, 2.6640, 6.5620<br>
+                                ...<br>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detail 4: Results & Processing Container -->
+            <div id="detail-laser-4" class="tutorial-view">
+                <button class="back-link btn-outline" onclick="showProjectMenu('laser-menu-view')">&larr; Back to
+                    Modules</button>
+                <div class="project-header-module">
+                    <h1>Results & Analysis</h1>
+                </div>
+                <div class="tutorial-module">
+                    <div class="text-container" style="margin-bottom: 2rem; text-align: center;">
+                        <h3>Deposition vs. Processed Metrology</h3>
+                        <p style="color: var(--muted); max-width: 800px; margin: 0 auto;">Direct side-by-side comparison
+                            showcasing the physical weld deposition structure and its corresponding digital
+                            laser-extracted geometric profile interpretation.</p>
+                    </div>
+
+                    <div style="display: flex; flex-wrap: wrap; gap: 2rem;">
+                        <div class="media-container"
+                            style="flex: 1; min-width: 300px; border: none; background: transparent; box-shadow: none; aspect-ratio: auto; padding: 0;">
+                            <img src="assets/snapshot_0003_processed.png" alt="Actual Deposition Image"
+                                style="width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+                        </div>
+
+                        <div class="media-container"
+                            style="flex: 1; min-width: 300px; border: none; background: transparent; box-shadow: none; aspect-ratio: auto; padding: 0;">
+                            <img src="assets/post_process_output.png" alt="Processed Profile Image"
+                                style="width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ═══ BICOPTER DETAILS ═══ -->
+    <section id="proj-bicopter" class="project-detail-section">
+        <div class="container">
+            <!-- MENU VIEW -->
+            <div id="bicopter-menu-view">
+                <div class="project-header-module reveal">
+                    <h1>Bicopter Flight Controller</h1>
+                    <p class="section-sub" style="margin: 0 auto; text-align: center;">Exploring the complete robotics
+                        training pipeline from simulation to real-world deployment.</p>
+                </div>
+                <div class="menu-grid reveal">
+                    <button class="menu-card" onclick="showProjectDetail('bicopter-menu-view', 'detail-bicopter-4')">
+                        <h3>Full Workflow</h3>
+                        <p>Sim-to-Real Pipeline</p>
+                    </button>
+                    <button class="menu-card" onclick="showProjectDetail('bicopter-menu-view', 'detail-bicopter-1')">
+                        <h3>Mechanical Modeling</h3>
+                        <p>CAD Design & URDF Kinematics</p>
+                    </button>
+                    <button class="menu-card" onclick="showProjectDetail('bicopter-menu-view', 'detail-bicopter-2')">
+                        <h3>Digital Twin Simulation</h3>
+                        <p>NVIDIA Isaac Sim Training</p>
+                    </button>
+                    <button class="menu-card" onclick="showProjectDetail('bicopter-menu-view', 'detail-bicopter-3')">
+                        <h3>Hardware Deployment</h3>
+                        <p>Real-World PID Tuning</p>
+                    </button>
+                </div>
+            </div>
+
+            <!-- DETAIL VIEWS -->
+
+            <!-- Detail 1: System Architecture -->
+            <div id="detail-bicopter-1" class="tutorial-view">
+                <button class="back-link btn-outline" onclick="showProjectMenu('bicopter-menu-view')">&larr; Back to
+                    Modules</button>
+                <div class="project-header-module">
+                    <h1>Mechanical Modeling & Kinematics</h1>
+                </div>
+                <div class="tutorial-module">
+                    <div style="display: flex; flex-wrap: wrap; gap: 2rem; align-items: center;">
+                        <div class="text-container" style="flex: 1; min-width: 300px;">
+                            <h3>Mechanical Design in CATIA V5</h3>
+                            <p>The foundational step in the sim-to-real pipeline was designing the physical constraints
+                                and mass properties of the bicopter test rig. I used <strong>CATIA V5</strong> for the
+                                mechanical design and assembly, ensuring accurate placement of the motors, propellers,
+                                and
+                                the MPU6050 IMU sensor.
+                            </p>
+                            <ul>
+                                <li style="margin-bottom: 0.5rem;"><strong>Mass Moments of Inertia:</strong> Precisely
+                                    calculated using <strong>MeshLab</strong> to extract accurate inertia tensors,
+                                    ensuring the simulation behaves identically to the physical world.</li>
+                                <li style="margin-bottom: 0.5rem;"><strong>URDF Generation:</strong> The CAD assembly
+                                    was exported and converted into a Universal Robot Description Format (URDF) file,
+                                    which maps the rigid bodies and revolute joints required for physics engines.</li>
+                            </ul>
+                        </div>
+                        <div class="media-container"
+                            style="flex: 1; min-width: 300px; padding: 0; background: transparent; border: none; box-shadow: none;">
+                            <img src="assets/inCATIA.png" alt="Bicopter designed in CATIA V5"
+                                style="width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.2);">
+                        </div>
+                    </div>
+
+                    <!-- Part 1: URDF Explanation -->
+                    <div class="text-container" style="margin-top: 4rem; margin-bottom: 2rem;">
+                        <h3>URDF Kinematic &amp; Dynamic Definition</h3>
+                        <p>To accurately simulate the physics, I authored the URDF model. The Universal Robot
+                            Description Format (URDF) defines the robot's physical constraints:</p>
+                        <ul>
+                            <li style="margin-bottom: 0.5rem;"><strong>Links &amp; Inertia:</strong> The base, strut,
+                                motor stand, and rotors are defined as rigid bodies (<code>&lt;link&gt;</code>) with
+                                highly precise mass tensors (<code>ixx, iyy, izz</code>) imported directly from CAD. For
+                                example, the base link weighs exactly 108 grams.</li>
+                            <li style="margin-bottom: 0.5rem;"><strong>Joints &amp; Kinematics:</strong> Rotors are
+                                attached via <code>&lt;joint type="continuous"&gt;</code> allowing infinite rotation on
+                                the Z-axis, while the motor stand is mounted on a <code>revolute</code> joint with
+                                defined effort and velocity limits to simulate realistic physical resistance and
+                                damping.</li>
+                            <li style="margin-bottom: 0.5rem;"><strong>Collision Models:</strong> Simplified bounding
+                                boxes and cylinders (<code>&lt;collision&gt;</code>) encapsulate the complex visual
+                                meshes (<code>&lt;visual&gt;</code>) to ensure the physics engine operates at maximum
+                                framerate without calculating complex mesh intersections.</li>
+                        </ul>
+                    </div>
+
+                    <div class="media-container"
+                        style="margin-bottom: 2rem; max-width: 800px; margin-left: auto; margin-right: auto; padding: 0; background: transparent; border: none;">
+                        <video src="assets/URDF.mp4" autoplay loop muted playsinline
+                            style="width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.2);"></video>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detail 2: Digital Twin Simulation -->
+            <div id="detail-bicopter-2" class="tutorial-view">
+                <button class="back-link btn-outline" onclick="showProjectMenu('bicopter-menu-view')">&larr; Back to
+                    Modules</button>
+                <div class="project-header-module">
+                    <h1>Digital Twin in NVIDIA Isaac Sim</h1>
+                </div>
+                <div class="tutorial-module">
+
+                    <!-- Part 2: Isaac Sim Setup -->
+                    <div style="margin-bottom: 5rem;">
+                        <div class="text-container" style="max-width: 800px; margin: 0 auto 3rem auto;">
+                            <h3
+                                style="margin-bottom: 1.5rem; font-size: 1.6rem; color: var(--accent); text-align: center;">
+                                Physics-Based Virtual Training Environment</h3>
+                            <p
+                                style="margin-bottom: 0; color: var(--muted); line-height: 1.8; font-size: 1.1rem; text-align: justify;">
+                                The URDF was imported into <strong>NVIDIA Isaac Sim</strong> to create a high-fidelity
+                                digital twin powered by the deterministic PhysX engine. Rather than risking hardware
+                                damage on a physical test rig, I developed a
+                                Python-based flight controller using the Omniverse API to tune the PID loop virtually.
+                            </p>
+                        </div>
+
+                        <div class="media-container"
+                            style="max-width: 900px; margin: 0 auto 3rem auto; padding: 0; background: transparent; border: none;">
+                            <img src="assets/isaac_sim.png" alt="Isaac Sim Interface"
+                                style="width: 100%; height: auto; border-radius: 8px; box-shadow: 0 8px 30px rgba(0,0,0,0.2);">
+                        </div>
+
+                        <div class="text-container" style="max-width: 800px; margin: 0 auto;">
+                            <p
+                                style="margin-bottom: 1.5rem; color: var(--muted); line-height: 1.8; font-size: 1.1rem; text-align: justify;">
+                                The simulation goes beyond simple rigid-body kinematics; it is thermodynamically and
+                                electrically accurate. The control logic actively computes <strong>real-world motor
+                                    constraints</strong>, including voltage drops across the L298N motor driver
+                                (typically ~2.0V loss) and non-linear thrust curves where thrust scales exponentially
+                                with duty cycle.
+                            </p>
+                            <p
+                                style="margin-bottom: 0; color: var(--muted); line-height: 1.8; font-size: 1.1rem; text-align: justify;">
+                                In practice, the Python controller runs a high-frequency loop that reads the simulated
+                                IMU pitch angle and compares it to a 0° setpoint. The resulting error is fed into a
+                                custom PID algorithm featuring <strong>integral anti-windup</strong>. This prevents the
+                                integral term from accumulating massive errors when the simulated motors saturate at
+                                their maximum RPM. The calculated compensatory thrust is then dynamically applied to the
+                                continuous rotor joints, allowing for safe, real-time tuning of the Kp, Ki, and Kd
+                                constants without the risk of destroying physical propellers.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Part 3: Simulation Training -->
+                    <div class="text-container" style="text-align: center; margin-bottom: 1.5rem;">
+                        <h3>Simulation Training in Action</h3>
+                    </div>
+                    <div class="media-container"
+                        style="max-width: 900px; margin: 0 auto; width: 100%; aspect-ratio: auto; border: none; background: transparent; padding: 0; margin-bottom: 2rem;">
+                        <video src="assets/sim_training.mp4" autoplay loop muted playsinline
+                            style="width: 100%; height: auto; border-radius: 8px; box-shadow: 0 8px 32px rgba(0,0,0,0.3);"></video>
+                    </div>
+
+                    <!-- Part 4: Real System Validation -->
+                    <div class="text-container"
+                        style="background: rgba(16, 185, 129, 0.05); padding: 1.5rem; border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 8px; text-align: center;">
+                        <h4 style="color: #10b981; margin-bottom: 0.5rem; font-family: 'Space Grotesk', sans-serif;">
+                            Successful Hardware Validation</h4>
+                        <p style="margin: 0; font-size: 0.95rem; color: var(--muted);">The optimal PID constants (Kp,
+                            Ki, Kd) derived from this simulated controller were recorded and successfully
+                            deployed to the physical system.</p>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Detail 3: Hardware Deployment -->
+            <div id="detail-bicopter-3" class="tutorial-view">
+                <button class="back-link btn-outline" onclick="showProjectMenu('bicopter-menu-view')">&larr; Back to
+                    Modules</button>
+                <div class="project-header-module">
+                    <h1>Hardware Deployment</h1>
+                </div>
+                <div class="tutorial-module">
+                    <!-- Row 1: Left Image, Right Content -->
+                    <div style="display: flex; flex-wrap: wrap; gap: 3rem; align-items: center; margin-bottom: 5rem;">
+                        <div class="media-container"
+                            style="flex: 1; min-width: 300px; padding: 0; background: transparent; border: none;">
+                            <img src="assets/full_setup.jpg" alt="Physical Setup"
+                                style="width: 100%; height: 100%; object-fit: contain; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.2);">
+                        </div>
+                        <div class="text-container" style="flex: 1.5; min-width: 300px;">
+                            <h3 style="margin-bottom: 1.5rem; font-size: 1.4rem; color: var(--accent);">Transition to
+                                Physical Hardware</h3>
+                            <p
+                                style="margin-bottom: 1rem; color: var(--muted); line-height: 1.8; font-size: 1.1rem; text-align: justify;">
+                                With the PID parameters successfully base-lined in the NVIDIA Isaac Sim digital twin,
+                                the control architecture was ported from high-level Python APIs to highly optimized,
+                                bare-metal C++ for deployment on an <strong>Arduino Uno</strong> microcontroller.
+                            </p>
+                            <p
+                                style="margin-bottom: 0; color: var(--muted); line-height: 1.8; font-size: 1.1rem; text-align: justify;">
+                                Unlike the simulation environment which relies on floating-point timestamps, the
+                                physical hardware demands deterministic execution. The firmware employs a <strong>strict
+                                    250Hz hardware timing loop (4000 &micro;s)</strong> utilizing the Arduino's internal
+                                <code>micros()</code> timer. This guarantees that the Integral and Derivative
+                                calculations in the PID loop process delta-time with absolute precision.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Row 2: Right Image, Left Content -->
+                    <div
+                        style="display: flex; flex-wrap: wrap; flex-direction: row-reverse; gap: 3rem; align-items: center; margin-bottom: 5rem;">
+                        <div class="media-container"
+                            style="flex: 1; min-width: 300px; padding: 0; background: transparent; border: none;">
+                            <img src="assets/front.jpg" alt="Front view of the bicopter"
+                                style="width: 100%; height: 100%; object-fit: contain; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.2);">
+                        </div>
+                        <div class="text-container" style="flex: 1.5; min-width: 300px;">
+                            <h3 style="margin-bottom: 1.5rem; font-size: 1.4rem; color: var(--accent);">Sensor Fusion &
+                                Power Electronics</h3>
+                            <p
+                                style="margin-bottom: 1rem; color: var(--muted); line-height: 1.8; font-size: 1.1rem; text-align: justify;">
+                                Real-world hardware introduces significant electrical and mechanical noise. The physical
+                                rig relies on an <strong>MPU6050 6-DOF IMU</strong> communicating over a 100kHz I2C bus.
+                                To counteract the intense mechanical vibration generated by the brushed DC motors, a
+                                deterministic Complementary Filter was implemented, extracting a pristine Euler pitch
+                                angle free of mechanical jitter.
+                            </p>
+                            <p
+                                style="margin-bottom: 0; color: var(--muted); line-height: 1.8; font-size: 1.1rem; text-align: justify;">
+                                For actuation, the control signals are mapped to an <strong>L298N Dual H-Bridge Motor
+                                    Driver</strong>. The 8-bit PWM outputs from the Arduino are linearly scaled to drive
+                                the high-current DC motors. Because the motors have a non-linear thrust curve, deadband
+                                compensation was written into the mixer logic to ensure minute PID corrections
+                                immediately result in thrust changes.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Row 3: Video Center, Explanation Below -->
+                    <div style="margin-bottom: 3rem;">
+                        <div class="media-container"
+                            style="max-width: 900px; margin: 0 auto 2rem auto; padding: 0; background: transparent; border: none;">
+                            <video src="assets/realtest.mp4" autoplay loop muted playsinline
+                                style="width: 100%; height: auto; border-radius: 8px; box-shadow: 0 8px 30px rgba(0,0,0,0.2);"></video>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detail 4: Full Workflow -->
+            <div id="detail-bicopter-4" class="tutorial-view">
+                <button class="back-link btn-outline" onclick="showProjectMenu('bicopter-menu-view')">&larr; Back to
+                    Modules</button>
+                <div class="project-header-module">
+                    <h1>Sim-to-Real Workflow</h1>
+                </div>
+                <div class="tutorial-module">
+                    <div class="text-container" style="margin-bottom: 2rem; text-align: center;">
+                        <h3>The Complete Pipeline</h3>
+                        <p style="max-width: 800px; margin: 0 auto; color: var(--muted);">A comprehensive visual
+                            representation
+                            of the end-to-end development pipeline from mechanical conceptualization to physical
+                            deployment.
+                        </p>
+                    </div>
+
+                    <!-- Horizontal Pipeline Flow -->
+                    <div
+                        style="display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 1rem; margin-bottom: 4rem; padding: 2rem; background: rgba(0,0,0,0.2); border: 1px solid var(--border); border-radius: 12px; box-shadow: inset 0 0 20px rgba(0,0,0,0.5);">
+
+                        <!-- Step 1 -->
+                        <div style="text-align: center; flex: 1; min-width: 120px;">
+                            <div
+                                style="width: 50px; height: 50px; margin: 0 auto 1rem auto; background: rgba(59, 130, 246, 0.1); border: 1px solid #3b82f6; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #3b82f6; box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);">
+                                <i data-lucide="box"></i>
+                            </div>
+                            <h4 style="font-size: 0.95rem; margin-bottom: 0.25rem;">CAD Design</h4>
+                            <span style="font-size: 0.75rem; color: var(--muted);">Catia V5 & Meshlab</span>
+                        </div>
+
+                        <!-- Arrow -->
+                        <div
+                            style="color: var(--muted); opacity: 0.5; display: flex; align-items: center; justify-content: center;">
+                            <i data-lucide="chevron-right" style="width: 32px; height: 32px;"></i>
+                        </div>
+
+                        <!-- Step 2 -->
+                        <div style="text-align: center; flex: 1; min-width: 120px;">
+                            <div
+                                style="width: 50px; height: 50px; margin: 0 auto 1rem auto; background: rgba(139, 92, 246, 0.1); border: 1px solid #8b5cf6; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #8b5cf6; box-shadow: 0 0 15px rgba(139, 92, 246, 0.2);">
+                                <i data-lucide="file-json"></i>
+                            </div>
+                            <h4 style="font-size: 0.95rem; margin-bottom: 0.25rem;">URDF Generation</h4>
+                            <span style="font-size: 0.75rem; color: var(--muted);">Joints & Kinematics</span>
+                        </div>
+
+                        <!-- Arrow -->
+                        <div
+                            style="color: var(--muted); opacity: 0.5; display: flex; align-items: center; justify-content: center;">
+                            <i data-lucide="chevron-right" style="width: 32px; height: 32px;"></i>
+                        </div>
+
+                        <!-- Step 3 -->
+                        <div style="text-align: center; flex: 1; min-width: 120px;">
+                            <div
+                                style="width: 50px; height: 50px; margin: 0 auto 1rem auto; background: rgba(16, 185, 129, 0.1); border: 1px solid #10b981; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #10b981; box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);">
+                                <i data-lucide="monitor"></i>
+                            </div>
+                            <h4 style="font-size: 0.95rem; margin-bottom: 0.25rem;">Isaac Sim</h4>
+                            <span style="font-size: 0.75rem; color: var(--muted);">Virutal PID Tuning</span>
+                        </div>
+
+                        <!-- Arrow -->
+                        <div
+                            style="color: var(--muted); opacity: 0.5; display: flex; align-items: center; justify-content: center;">
+                            <i data-lucide="chevron-right" style="width: 32px; height: 32px;"></i>
+                        </div>
+
+                        <!-- Step 4 -->
+                        <div style="text-align: center; flex: 1; min-width: 120px;">
+                            <div
+                                style="width: 50px; height: 50px; margin: 0 auto 1rem auto; background: rgba(245, 158, 11, 0.1); border: 1px solid #f59e0b; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #f59e0b; box-shadow: 0 0 15px rgba(245, 158, 11, 0.2);">
+                                <i data-lucide="cpu"></i>
+                            </div>
+                            <h4 style="font-size: 0.95rem; margin-bottom: 0.25rem;">Implementation</h4>
+                            <span style="font-size: 0.75rem; color: var(--muted);">IMU & PID</span>
+                        </div>
+
+                        <!-- Arrow -->
+                        <div
+                            style="color: var(--muted); opacity: 0.5; display: flex; align-items: center; justify-content: center;">
+                            <i data-lucide="chevron-right" style="width: 32px; height: 32px;"></i>
+                        </div>
+
+                        <!-- Step 5 -->
+                        <div style="text-align: center; flex: 1; min-width: 120px;">
+                            <div
+                                style="width: 50px; height: 50px; margin: 0 auto 1rem auto; background: rgba(239, 68, 68, 0.1); border: 1px solid #ef4444; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #ef4444; box-shadow: 0 0 15px rgba(239, 68, 68, 0.2);">
+                                <i data-lucide="rocket"></i>
+                            </div>
+                            <h4 style="font-size: 0.95rem; margin-bottom: 0.25rem; color: var(--accent);">Testing</h4>
+                            <span style="font-size: 0.75rem; color: var(--accent-2);">Deployment</span>
+                        </div>
+                    </div>
+
+                    <!-- Deep Dive Features -->
+                    <style>
+                        @keyframes custom-spin {
+                            100% {
+                                transform: rotate(360deg);
+                            }
+                        }
+
+                        @keyframes custom-pulse {
+
+                            0%,
+                            100% {
+                                opacity: 1;
+                                transform: scale(1);
+                            }
+
+                            50% {
+                                opacity: 0.5;
+                                transform: scale(0.9);
+                            }
+                        }
+
+                        @keyframes float-up-down {
+
+                            0%,
+                            100% {
+                                transform: translateY(0);
+                            }
+
+                            50% {
+                                transform: translateY(-10px);
+                            }
+                        }
+                    </style>
+                    <div class="features-container"
+                        style="margin-top: 4rem; max-width: 900px; margin-left: auto; margin-right: auto;">
+                        <h3 style="margin-bottom: 4rem; text-align: center; font-family: 'Space Grotesk', sans-serif;">
+                            Bridging the Reality Gap</h3>
+
+                        <!-- Feature 1: Concurrent Eng (Left Icon, Right Text) -->
+                        <div
+                            style="display: flex; flex-wrap: wrap; align-items: center; gap: 3rem; margin-bottom: 5rem;">
+                            <div style="flex: 1; min-width: 250px; display: flex; justify-content: center;">
+                                <div
+                                    style="position: relative; width: 140px; height: 140px; background: rgba(59, 130, 246, 0.05); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 30px rgba(59, 130, 246, 0.1);">
+                                    <i data-lucide="settings"
+                                        style="width: 64px; height: 64px; color: #3b82f6; animation: custom-spin 6s linear infinite;"></i>
+                                    <i data-lucide="settings"
+                                        style="width: 32px; height: 32px; color: #8b5cf6; position: absolute; bottom: 20px; right: 20px; animation: custom-spin 4s linear infinite reverse;"></i>
+                                </div>
+                            </div>
+                            <div style="flex: 2; min-width: 300px;">
+                                <h4 style="color: #3b82f6; margin-bottom: 1rem; font-size: 1.25rem;">1. Concurrent
+                                    Engineering</h4>
+                                <p
+                                    style="margin-bottom: 0.75rem; color: var(--muted); line-height: 1.7; font-size: 1.05rem; text-align: justify;">
+                                    In traditional robotics, software developers must wait for hardware fabrication.
+                                    This sim-to-real workflow enables <strong>100% concurrent development</strong>.
+                                    While the 3D-printed chassis and L298N circuits were being physically assembled, the
+                                    flight control logic was already being verified virtually.</p>
+                                <p
+                                    style="margin-bottom: 0; color: var(--muted); line-height: 1.7; font-size: 1.05rem; text-align: justify;">
+                                    Crucially, this isolates logical bugs from hardware flaws. If the digital twin
+                                    crashes, it's a mathematical error. If the physical rig crashes after the twin
+                                    succeeds, it definitively points to real-world anomalies like sensor noise.</p>
+                            </div>
+                        </div>
+
+                        <!-- Feature 2: Signal Noise (Left Text, Right Icon) -->
+                        <div
+                            style="display: flex; flex-wrap: wrap; flex-direction: row-reverse; align-items: center; gap: 3rem; margin-bottom: 5rem;">
+                            <div style="flex: 1; min-width: 250px; display: flex; justify-content: center;">
+                                <div
+                                    style="position: relative; width: 140px; height: 140px; background: rgba(16, 185, 129, 0.05); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 30px rgba(16, 185, 129, 0.1);">
+                                    <i data-lucide="activity"
+                                        style="width: 72px; height: 72px; color: #10b981; animation: custom-pulse 2s infinite;"></i>
+                                    <i data-lucide="radio"
+                                        style="width: 32px; height: 32px; color: #34d399; position: absolute; top: 20px; left: 20px; opacity: 0.6; animation: float-up-down 3s ease-in-out infinite;"></i>
+                                </div>
+                            </div>
+                            <div style="flex: 2; min-width: 300px;">
+                                <h4 style="color: #10b981; margin-bottom: 1rem; font-size: 1.25rem;">2. Mitigating
+                                    Signal Noise</h4>
+                                <p
+                                    style="margin-bottom: 0.75rem; color: var(--muted); line-height: 1.7; font-size: 1.05rem; text-align: justify;">
+                                    The digital twin provides perfect floating-point "Ground Truth" Euler angles with
+                                    zero latency. The physical MPU6050, however, suffers from severe mechanical
+                                    vibration from the brushed DC motors, transmitting noisy data over a
+                                    bandwidth-limited I2C bus.</p>
+                                <p
+                                    style="margin-bottom: 0; color: var(--muted); line-height: 1.7; font-size: 1.05rem; text-align: justify;">
+                                    To bridge this gap, a <strong>Signal Processing Layer</strong> was engineered. A
+                                    deterministic Complementary Filter fuses high-frequency Gyroscope rates with
+                                    low-frequency Accelerometer vectors, effectively masking mechanical noise.</p>
+                            </div>
+                        </div>
+
+                        <!-- Feature 3: Algorithmic Parity (Left Icon, Right Text) -->
+                        <div
+                            style="display: flex; flex-wrap: wrap; align-items: center; gap: 3rem; margin-bottom: 2rem;">
+                            <div style="flex: 1; min-width: 250px; display: flex; justify-content: center;">
+                                <div
+                                    style="position: relative; width: 140px; height: 140px; background: rgba(239, 68, 68, 0.05); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 30px rgba(239, 68, 68, 0.1);">
+                                    <i data-lucide="cpu"
+                                        style="width: 64px; height: 64px; color: #ef4444; animation: float-up-down 4s ease-in-out infinite;"></i>
+                                    <i data-lucide="monitor"
+                                        style="width: 32px; height: 32px; color: #f87171; position: absolute; bottom: 15px; left: 25px;"></i>
+                                </div>
+                            </div>
+                            <div style="flex: 2; min-width: 300px;">
+                                <h4 style="color: #ef4444; margin-bottom: 1rem; font-size: 1.25rem;">3. Algorithmic
+                                    Parity</h4>
+                                <p
+                                    style="margin-bottom: 0.75rem; color: var(--muted); line-height: 1.7; font-size: 1.05rem; text-align: justify;">
+                                    The simulation environment executes via high-level Python APIs running on a heavy
+                                    GPU workstation. In contrast, the physical rig operates on bare-metal C++ executing
+                                    on a 16MHz Arduino microcontroller.</p>
+                                <p
+                                    style="margin-bottom: 0; color: var(--muted); line-height: 1.7; font-size: 1.05rem; text-align: justify;">
+                                    Maintaining architectural parity required careful scaling of math operations. The
+                                    virtual PID constants were mathematically mapped from the simulation's variable
+                                    time-step to the Arduino's rigid 4000&micro;s timer loop to ensure identical
+                                    transient responses.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ═══ WELD PARAMETER OPTIMIZATION DETAILS ═══ -->
+    <section id="proj-weldbead" class="project-detail-section">
+        <div class="container">
+            <!-- MENU VIEW -->
+            <div id="weldbead-menu-view">
+                <div class="project-header-module reveal">
+                    <h1>Model Predictive Control</h1>
+                    <p class="section-sub" style="margin: 0 auto; text-align: center;">Physics-Informed Parameter
+                        Optimization.</p>
+                </div>
+                <div class="menu-grid reveal">
+                    <button class="menu-card" onclick="showProjectDetail('weldbead-menu-view', 'detail-weldbead-1')">
+                        <h3>The Digital Twin</h3>
+                        <p>Forward Prediction Engine</p>
+                    </button>
+                    <button class="menu-card" onclick="showProjectDetail('weldbead-menu-view', 'detail-weldbead-2')">
+                        <h3>Genetic Algorithm</h3>
+                        <p>Search & Optimization Engine</p>
+                    </button>
+                    <button class="menu-card" onclick="showProjectDetail('weldbead-menu-view', 'detail-weldbead-3')">
+                        <h3>System Test & Results</h3>
+                        <p>Real-world optimization performance</p>
+                    </button>
+                </div>
+            </div>
+
+            <!-- DETAIL VIEWS -->
+            <div id="detail-weldbead-1" class="tutorial-view">
+                <button class="back-link btn-outline" onclick="showProjectMenu('weldbead-menu-view')">&larr; Back to
+                    Modules</button>
+                <div class="project-header-module">
+                    <h1>The Digital Twin (Forward Predictor)</h1>
+                </div>
+                <div class="tutorial-module">
+                    <div class="media-container"
+                        style="background: #0a0a0a; border: 1px solid var(--border); box-shadow: inset 0 0 30px rgba(0,0,0,0.8); aspect-ratio: 16/9; padding: 0; position: relative; overflow: hidden;">
+                        <canvas id="rosenthalCanvas" style="width: 100%; height: 100%; display: block;"></canvas>
+                        <div
+                            style="position: absolute; top: 1rem; left: 1rem; color: rgba(255,255,255,0.7); font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; pointer-events: none;">
+                            <span style="color: #ff3333; animation: pulse 1.5s infinite;">●</span> LIVE: 4-State
+                            Rosenthal Simulation
+                        </div>
+                        <div
+                            style="position: absolute; bottom: 1rem; right: 1rem; color: rgba(255,255,255,0.6); font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; pointer-events: none; background: rgba(0,0,0,0.6); padding: 0.5rem 0.75rem; border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; text-align: right;">
+                            <i>T</i> - <i>T<sub>0</sub></i> = (<i>Q</i> / 2&pi;<i>kr</i>)
+                            e<sup>-<i>v</i>(<i>r</i>+<i>x</i>) / 2&alpha;</sup><br>
+                            <span style="color: #3b82f6;">Q</span> = Heat Input &nbsp;|&nbsp; <span
+                                style="color: #10b981;">v</span> = Travel Speed
+                        </div>
+                    </div>
+                    <style>
+                        @keyframes pulse {
+                            0% {
+                                opacity: 1;
+                            }
+
+                            50% {
+                                opacity: 0.3;
+                            }
+
+                            100% {
+                                opacity: 1;
+                            }
+                        }
+                    </style>
+                    <script>
+                        (function () {
+                            const canvas = document.getElementById('rosenthalCanvas');
+                            const ctx = canvas.getContext('2d');
+                            let w, h;
+
+                            const sims = [
+                                { label: "1. Nominal Bead", vText: "3.0 mm/s", qText: "3500 J/s", speed: 2.5, Q: 1.0, x: -50, history: [] },
+                                { label: "2. High Heat / Slow (Burn-Through Risk)", vText: "1.5 mm/s", qText: "5000 J/s", speed: 1.25, Q: 1.8, x: -50, history: [] },
+                                { label: "3. Low Heat / Fast (Lack of Fusion)", vText: "6.0 mm/s", qText: "2000 J/s", speed: 5.0, Q: 0.4, x: -50, history: [] },
+                                { label: "4. MPC Optimized (Efficiency Penalty)", vText: "4.5 mm/s", qText: "3000 J/s", speed: 3.75, Q: 0.8, x: -50, history: [] }
+                            ];
+
+                            function resize() {
+                                w = canvas.width = canvas.offsetWidth;
+                                h = canvas.height = canvas.offsetHeight;
+                            }
+                            window.addEventListener('resize', resize);
+                            setTimeout(resize, 100);
+
+                            function draw() {
+                                if (!w || !h) resize();
+                                ctx.fillStyle = '#0a0a0a';
+                                ctx.fillRect(0, 0, w, h);
+
+                                // Draw base plate grid
+                                ctx.strokeStyle = 'rgba(255, 255, 255, 0.03)';
+                                ctx.lineWidth = 1;
+                                for (let i = 0; i < w; i += 40) { ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, h); ctx.stroke(); }
+                                for (let i = 0; i < h; i += 40) { ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(w, i); ctx.stroke(); }
+
+                                // Draw track dividers
+                                ctx.strokeStyle = 'rgba(255,255,255,0.1)';
+                                for (let i = 1; i < 4; i++) {
+                                    ctx.beginPath(); ctx.moveTo(0, h * i / 4); ctx.lineTo(w, h * i / 4); ctx.stroke();
+                                }
+
+                                const now = Date.now();
+
+                                sims.forEach((sim, index) => {
+                                    const trackY = h * (index + 0.5) / 4;
+
+                                    sim.x += sim.speed;
+                                    if (sim.x > w + 150) {
+                                        sim.x = -50;
+                                        sim.history.length = 0;
+                                    }
+
+                                    sim.history.push({ x: sim.x, y: trackY, time: now });
+                                    if (sim.history.length > 300) sim.history.shift();
+
+                                    // Draw thermal trail
+                                    for (let i = 0; i < sim.history.length; i++) {
+                                        const pt = sim.history[i];
+                                        const age = now - pt.time;
+                                        if (age > 5000) continue;
+
+                                        const intensity = Math.max(0, 1 - (age / 5000)) * Math.min(1, sim.Q * 1.5);
+                                        const radius = (25 + (1 - (age / 5000)) * 20) * sim.Q;
+
+                                        const grad = ctx.createRadialGradient(pt.x, pt.y, 0, pt.x, pt.y, radius);
+                                        if (intensity > 0.9) {
+                                            grad.addColorStop(0, `rgba(255, 255, 255, ${intensity})`);
+                                            grad.addColorStop(0.3, `rgba(255, 255, 0, ${intensity})`);
+                                        } else {
+                                            grad.addColorStop(0, `rgba(255, 120, 0, ${intensity})`);
+                                        }
+                                        grad.addColorStop(0.6, `rgba(255, 0, 0, ${intensity * 0.4})`);
+                                        grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+
+                                        ctx.fillStyle = grad;
+                                        ctx.beginPath();
+                                        ctx.arc(pt.x, pt.y, radius, 0, Math.PI * 2);
+                                        ctx.fill();
+                                    }
+
+                                    // Draw Torch Head
+                                    if (sim.history.length > 0) {
+                                        const head = sim.history[sim.history.length - 1];
+
+                                        // Isotherms
+                                        ctx.strokeStyle = 'rgba(255, 100, 100, 0.4)';
+                                        ctx.lineWidth = 1;
+                                        ctx.beginPath(); ctx.arc(head.x, head.y, 45 * sim.Q, 0, Math.PI * 2); ctx.stroke();
+                                        ctx.beginPath(); ctx.arc(head.x, head.y, 70 * sim.Q, 0, Math.PI * 2); ctx.stroke();
+
+                                        // Nozzle
+                                        ctx.strokeStyle = '#ffffff';
+                                        ctx.lineWidth = 1.5;
+                                        ctx.beginPath(); ctx.arc(head.x, head.y, 6, 0, Math.PI * 2); ctx.stroke();
+
+                                        // Crosshairs
+                                        ctx.beginPath();
+                                        ctx.moveTo(head.x - 12, head.y); ctx.lineTo(head.x + 12, head.y);
+                                        ctx.moveTo(head.x, head.y - 12); ctx.lineTo(head.x, head.y + 12);
+                                        ctx.stroke();
+                                    }
+
+                                    // Draw HUD Text
+                                    ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+                                    ctx.font = 'bold 12px "Space Grotesk", sans-serif';
+                                    ctx.fillText(sim.label, 15, h * index / 4 + 25);
+
+                                    ctx.font = '11px "JetBrains Mono", monospace';
+                                    ctx.fillStyle = '#10b981';
+                                    ctx.fillText(`v: ${sim.vText}`, 15, h * index / 4 + 43);
+
+                                    ctx.fillStyle = '#3b82f6';
+                                    ctx.fillText(`Q: ${sim.qText}`, 100, h * index / 4 + 43);
+                                });
+
+                                requestAnimationFrame(draw);
+                            }
+
+                            const observer = new IntersectionObserver((entries) => {
+                                entries.forEach(entry => {
+                                    if (entry.isIntersecting) {
+                                        resize();
+                                        draw();
+                                        observer.disconnect();
+                                    }
+                                });
+                            });
+                            observer.observe(canvas);
+                        })();
+                    </script>
+                    <div class="text-container" style="margin-top: 2rem;">
+                        <h3>Physics-Informed Prediction</h3>
+                        <p>Predicting process parameters directly from a desired geometry is mathematically an
+                            <strong>"Ill-Posed Inverse Problem"</strong>. Multiple parameter combinations (e.g., High
+                            Current + High Speed vs. Low Current + Low Speed) can yield the exact same bead width. When
+                            a standard ML model sees one input mapping to multiple correct outputs, it averages them
+                            out, leading to catastrophic failure.
+                        </p>
+                        <p>To solve this, I built a highly accurate <strong>Forward Predictor</strong>. This Digital
+                            Twin uses a <strong>Hybrid Physics-ML Architecture</strong>. The foundation is the
+                            analytical <strong>Rosenthal Heat Source Equation</strong>, which computes the theoretical
+                            3D thermal gradient of the moving melt pool. However, pure analytical models fail to capture
+                            chaotic molten fluid dynamics (Marangoni convection) and non-linear arc physics.</p>
+
+                        <div
+                            style="margin: 2rem 0; padding: 1.5rem; background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 8px;">
+                            <h4
+                                style="margin-bottom: 1rem; text-align: center; color: var(--accent); font-family: 'Space Grotesk', sans-serif;">
+                                Hybrid Physics-ML Architecture</h4>
+                            <div
+                                style="display: flex; flex-direction: column; align-items: center; gap: 1rem; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem;">
+                                <div
+                                    style="padding: 0.5rem 1rem; background: var(--surface); border: 1px solid var(--muted); border-radius: 4px;">
+                                    Inputs (C, V, S, CTWD, Temp)</div>
+                                <div style="color: var(--muted);">&darr;</div>
+                                <div
+                                    style="display: flex; gap: 1.5rem; width: 100%; justify-content: center; flex-wrap: wrap;">
+                                    <div
+                                        style="padding: 1rem; background: rgba(37, 99, 235, 0.1); border: 1px solid rgba(37, 99, 235, 0.3); border-radius: 4px; text-align: center; flex: 1; min-width: 200px;">
+                                        <strong style="color: var(--accent);">Rosenthal Equation</strong><br>
+                                        <span style="font-size: 0.75rem; color: var(--muted);">Analytical Thermal
+                                            Gradient</span>
+                                    </div>
+                                    <div
+                                        style="padding: 1rem; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 4px; text-align: center; flex: 1; min-width: 200px;">
+                                        <strong style="color: #10b981;">ML Residual Corrector</strong><br>
+                                        <span style="font-size: 0.75rem; color: var(--muted);">Marangoni & Fluid
+                                            Dynamics</span>
+                                    </div>
+                                </div>
+                                <div style="color: var(--muted);">&darr;</div>
+                                <div
+                                    style="padding: 0.5rem 1rem; background: var(--surface); border: 1px solid var(--accent); border-radius: 4px; color: var(--foreground); font-weight: bold;">
+                                    Predicted Geometry (W, H)</div>
+                            </div>
+                        </div>
+
+                        <p>To bridge this gap, I implemented a <strong>Machine Learning Residual Corrector</strong> that
+                            learns the exact delta between the theoretical thermal physics and the final physical bead
+                            geometry. I synthesized a 500-sample industrial dataset and upgraded the architecture to
+                            actively ingest <strong>Contact Tip to Work Distance (CTWD)</strong> and <strong>Plate
+                                Interpass Temperature</strong> sensors.</p>
+                        <p>By forcing the ML to understand <i>I</i><sup>2</sup><i>R</i> Joule heating from wire
+                            stick-out and thermal
+                            accumulation from multi-pass welding, the twin achieves a phenomenal validation R² of 0.9856
+                            for width and 0.9425 for height, entirely eliminating the "black-box" nature of standard
+                            neural networks.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="detail-weldbead-2" class="tutorial-view">
+                <button class="back-link btn-outline" onclick="showProjectMenu('weldbead-menu-view')">&larr; Back to
+                    Modules</button>
+                <div class="project-header-module">
+                    <h1>Genetic Algorithm Optimizer</h1>
+                </div>
+                <div class="tutorial-module">
+                    <div class="media-container"
+                        style="background: var(--surface); border: 1px solid var(--border); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05); aspect-ratio: 16/9; padding: 0;">
+                        <img src="assets/ga_convergence.png" alt="Genetic Algorithm Convergence Plot"
+                            style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="text-container" style="margin-top: 2rem;">
+                        <h3>Simulation-Based Search with Efficiency Regularization</h3>
+                        <p>With an accurate Digital Twin in place, the second engine of the system is the
+                            <strong>Genetic Algorithm Optimizer</strong> (utilizing Differential Evolution). Because the
+                            welding design space is highly non-convex, standard gradient descent methods fail. Instead,
+                            the GA simulates thousands of parameter combinations through the Digital Twin, rapidly
+                            "evolving" the inputs (Current, Voltage, Velocity) to converge on the target geometry.
+                        </p>
+
+                        <div
+                            style="margin: 2rem 0; padding: 1.5rem; background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 8px;">
+                            <h4
+                                style="margin-bottom: 1rem; text-align: center; color: var(--accent); font-family: 'Space Grotesk', sans-serif;">
+                                Differential Evolution Closed-Loop</h4>
+                            <div
+                                style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem;">
+                                <div
+                                    style="padding: 0.5rem 1rem; background: var(--surface); border: 1px solid var(--muted); border-radius: 4px;">
+                                    Target Geometry (W, H)</div>
+                                <div style="color: var(--muted);">&darr;</div>
+                                <div
+                                    style="padding: 1.5rem; background: rgba(245, 158, 11, 0.05); border: 1px dashed rgba(245, 158, 11, 0.4); border-radius: 4px; text-align: center; width: 100%; max-width: 450px;">
+                                    <strong style="color: #f59e0b; font-size: 0.95rem;">Population Generation (Mutate &
+                                        Crossover)</strong>
+                                    <div style="margin: 0.75rem 0; color: var(--muted);">&darr;</div>
+                                    <div
+                                        style="padding: 0.5rem; background: var(--surface); border: 1px solid var(--border); border-radius: 4px;">
+                                        Simulate via Digital Twin</div>
+                                    <div style="margin: 0.75rem 0; color: var(--muted);">&darr;</div>
+                                    <div
+                                        style="padding: 0.5rem; background: var(--surface); border: 1px solid var(--border); border-radius: 4px;">
+                                        Evaluate: Geometric Error + <span style="color: #ef4444;">Efficiency Penalty
+                                            (Q)</span></div>
+                                </div>
+                                <div style="display: flex; gap: 1rem; align-items: center; margin-top: 0.5rem;">
+                                    <div style="color: var(--accent-2); font-weight: bold; font-size: 1.2rem;">&uarr;
+                                    </div>
+                                    <span
+                                        style="font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px;">Loop
+                                        until converged</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p>Crucially, because the inverse problem is non-unique, I engineered an <strong>Efficiency
+                                Penalty</strong> into the objective function. In welding metallurgy, excessive Heat
+                            Input (<i>Q</i> = &eta;<i>VI</i> / <i>v</i>) causes severe plate distortion, residual
+                            stress, and weakened
+                            grain structures.</p>
+                        <p>When multiple parameter combinations yield the exact same bead dimensions, the algorithm
+                            mathematically favors the solution that minimizes Current (reducing heat input and power
+                            consumption) while maximizing Travel Speed (increasing production throughput). This
+                            guarantees the output is not just a valid geometric match, but the absolute optimal
+                            thermodynamic and economic operating point for the factory.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="detail-weldbead-3" class="tutorial-view">
+                <button class="back-link btn-outline" onclick="showProjectMenu('weldbead-menu-view')">&larr; Back to
+                    Modules</button>
+                <div class="project-header-module">
+                    <h1>System Test & Results</h1>
+                </div>
+                <div class="tutorial-module">
+                    <div style="display: flex; flex-wrap: wrap; gap: 2rem;">
+                        <div class="media-container"
+                            style="flex: 1; min-width: 300px; background: var(--surface); border: 1px solid var(--border); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05); padding: 0;">
+                            <img src="assets/weld_bead_cross_section.png" alt="Predicted Weld Bead Geometry"
+                                style="width: 100%; height: auto; object-fit: contain;">
+                        </div>
+                        <div class="media-container"
+                            style="flex: 1; min-width: 300px; background: var(--surface); padding: 1.5rem; border: 1px dashed var(--border); display: flex; align-items: center; justify-content: center; min-height: 250px;">
+                            <div class="placeholder-media" style="text-align: center;">
+                                <i data-lucide="camera" style="width: 48px; height: 48px; margin-bottom: 1rem;"></i><br>
+                                <strong>[Vacancy for Image]</strong><br>
+                                Insert actual physical deposition photograph here.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-container" style="margin-top: 2rem;">
+                        <h3>Live System Test: Environmental Compensation</h3>
+                        <p>To prove the system's industrial viability, I ran the Genetic Algorithm through two distinct
+                            scenarios
+                            to observe how it mathematically adjusts to varying shop floor constraints.</p>
+
+                        <div
+                            style="background: rgba(37, 99, 235, 0.05); border-left: 4px solid var(--accent); padding: 1.5rem; margin: 1.5rem 0; border-radius: 0 8px 8px 0; font-size: 0.95rem; overflow-x: auto;">
+                            <h4
+                                style="margin-bottom: 0.5rem; font-family: 'Space Grotesk', sans-serif; color: var(--accent);">
+                                Scenario 1: The Multi-Pass Temperature Effect</h4>
+                            <p style="margin-bottom: 0.5rem; font-size: 0.9rem;">Target Bead: <strong>Width=10.0mm,
+                                    Height=3.0mm</strong></p>
+                            <p
+                                style="margin-bottom: 0.5rem; font-size: 0.9rem; font-family: 'JetBrains Mono', monospace;">
+                                <span style="color: var(--muted);">Cold Plate (25°C):</span> C=162.3A, S=2.06 mm/s<br>
+                                <span style="color: var(--accent-2);">Hot Plate (150°C):</span> C=163.5A, S=3.29 mm/s
+                            </p>
+                            <p style="margin-bottom: 0; font-size: 0.85rem; color: var(--muted);"><em>Physics
+                                    Insight:</em> The base material is hot and readily accepts the weld. If the robot
+                                moved at the slow 2.06 mm/s, the hot bead would flatten out and become too wide. The
+                                optimizer correctly deduced it must increase travel speed by 60% to hit the exact same
+                                geometry.</p>
+                        </div>
+
+                        <div
+                            style="background: rgba(37, 99, 235, 0.05); border-left: 4px solid var(--accent); padding: 1.5rem; margin: 1.5rem 0; border-radius: 0 8px 8px 0; font-size: 0.95rem; overflow-x: auto;">
+                            <h4
+                                style="margin-bottom: 0.5rem; font-family: 'Space Grotesk', sans-serif; color: var(--accent);">
+                                Scenario 2: The CTWD Stick-Out Effect</h4>
+                            <p style="margin-bottom: 0.5rem; font-size: 0.9rem;">Target Bead: <strong>Width=8.0mm,
+                                    Height=2.0mm</strong></p>
+                            <p
+                                style="margin-bottom: 0.5rem; font-size: 0.9rem; font-family: 'JetBrains Mono', monospace;">
+                                <span style="color: var(--muted);">Normal CTWD (15mm):</span> C=122.9A, S=2.00 mm/s<br>
+                                <span style="color: var(--accent-2);">Long CTWD (25mm):</span> C=167.1A, S=8.25 mm/s
+                            </p>
+                            <p style="margin-bottom: 0; font-size: 0.85rem; color: var(--muted);"><em>Physics
+                                    Insight:</em> When the wire sticks out further (25mm), it undergoes heavy resistance
+                                heating and melts off rapidly. To keep the height down to exactly 2.0mm, the Digital
+                                Twin figured out that the robot must sprint at 8.25 mm/s so the wire doesn't pile up.
+                            </p>
+                        </div>
+
+                        <p>These tests confirm the system is no longer just curve-fitting numbers; it is predicting
+                            thermodynamics. It successfully identifies viable parameter configurations that human
+                            operators or standard ML models fail to map, proving its readiness for closed-loop
+                            real-world integration.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>Designed and built by Srihari A Pillai. 2026.</p>
+    </footer>
+
+    <!-- Lightbox Element -->
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" id="lightbox-close">&times;</button>
+        <div id="lightbox-body"
+            style="display: flex; align-items: center; justify-content: center; width: 100%; height: 100%;"></div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        lucide.createIcons();
+
+        // Routing & Lightbox Logic
+        document.addEventListener('DOMContentLoaded', () => {
+            // Routing & Menu Logic
+            window.showProjectDetail = (menuId, detailId) => {
+                document.getElementById(menuId).style.display = 'none';
+                document.querySelectorAll('.tutorial-view').forEach(el => el.style.display = 'none');
+                const detailView = document.getElementById(detailId);
+                if (detailView) {
+                    detailView.style.display = 'block';
+                }
+                const backPortfolioBtn = document.getElementById('back-to-portfolio-btn');
+                if (backPortfolioBtn) backPortfolioBtn.style.display = 'none';
+
+                const backModulesBtn = document.getElementById('global-back-to-modules-btn');
+                if (backModulesBtn) {
+                    backModulesBtn.style.display = 'inline-flex';
+                    backModulesBtn.onclick = () => showProjectMenu(menuId);
+                }
+                window.scrollTo(0, 0);
+            };
+
+            window.showProjectMenu = (menuId) => {
+                document.querySelectorAll('.tutorial-view').forEach(el => el.style.display = 'none');
+                const menuView = document.getElementById(menuId);
+                if (menuView) {
+                    menuView.style.display = 'block';
+                }
+                const backPortfolioBtn = document.getElementById('back-to-portfolio-btn');
+                if (backPortfolioBtn) backPortfolioBtn.style.display = 'inline-flex';
+
+                const backModulesBtn = document.getElementById('global-back-to-modules-btn');
+                if (backModulesBtn) backModulesBtn.style.display = 'none';
+            };
+
+            // Main Page Routing Logic
+            const sections = document.querySelectorAll('.project-detail-section');
+            const dividers = document.querySelectorAll('.divider');
+
+            const updateVisibility = () => {
+                const hash = window.location.hash;
+                if (hash) {
+                    let found = false;
+                    sections.forEach(section => {
+                        if ('#' + section.id === hash) {
+                            section.style.display = 'block';
+                            found = true;
+                        } else {
+                            section.style.display = 'none';
+                        }
+                    });
+
+                    if (found) {
+                        dividers.forEach(d => d.style.display = 'none');
+                    }
+                } else {
+                    sections.forEach(section => section.style.display = 'block');
+                    dividers.forEach(d => d.style.display = 'block');
+                }
+            };
+
+            updateVisibility();
+            window.addEventListener('hashchange', updateVisibility);
+
+            // Lightbox Logic
+            const mediaContainers = document.querySelectorAll('.media-container');
+            const lightbox = document.getElementById('lightbox');
+            const lightboxBody = document.getElementById('lightbox-body');
+            const lightboxClose = document.getElementById('lightbox-close');
+
+            mediaContainers.forEach(container => {
+                // Check if it has an actual image or video, not just a placeholder
+                const mediaElem = container.querySelector('img, video');
+                const isPlaceholder = container.querySelector('.placeholder-media');
+
+                if (mediaElem && !isPlaceholder) {
+                    // Set relative position for absolute overlay
+                    container.style.position = 'relative';
+                    container.style.cursor = 'pointer';
+
+                    // Add fullscreen hover button
+                    const btn = document.createElement('button');
+                    btn.className = 'fullscreen-btn';
+                    btn.innerHTML = '<i data-lucide="maximize"></i>';
+                    container.appendChild(btn);
+
+                    // Click event to open lightbox
+                    container.addEventListener('click', (e) => {
+                        // Prevent click if they clicked some inner controls for video normally
+                        if (e.target.tagName.toLowerCase() === 'video' && e.target.hasAttribute('controls') && e.offsetY > e.target.clientHeight - 50) return;
+
+                        lightboxBody.innerHTML = ''; // clear previous
+                        if (mediaElem.tagName.toLowerCase() === 'img') {
+                            const img = document.createElement('img');
+                            img.src = mediaElem.src;
+                            img.className = 'lightbox-content';
+                            lightboxBody.appendChild(img);
+                        } else if (mediaElem.tagName.toLowerCase() === 'video') {
+                            const video = document.createElement('video');
+                            video.src = mediaElem.src;
+                            video.controls = true;
+                            video.autoplay = true;
+                            video.className = 'lightbox-content';
+                            lightboxBody.appendChild(video);
+                        }
+                        lightbox.classList.add('active');
+                    });
+                }
+            });
+
+            // Re-initialize lucide icons for the newly added maximize icons
+            lucide.createIcons();
+
+            // Close lightbox logic
+            const closeLightbox = () => {
+                lightbox.classList.remove('active');
+                lightboxBody.innerHTML = ''; // Stop video playback
+            };
+
+            lightboxClose.addEventListener('click', closeLightbox);
+
+            lightbox.addEventListener('click', (e) => {
+                if (e.target === lightbox || e.target === lightboxBody) {
+                    closeLightbox();
+                }
+            });
+
+            // Escape key to close
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+                    closeLightbox();
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
