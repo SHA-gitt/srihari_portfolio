@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ── Theme Toggle ──────────────────────────────────────
     const themeToggleBtn = document.getElementById('theme-toggle');
     const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
-    
+
     // Check for saved theme preference or use system preference
     const currentTheme = localStorage.getItem('theme') || (prefersDarkScheme.matches ? 'dark' : 'light');
     if (currentTheme === 'dark') {
@@ -66,13 +66,13 @@ document.addEventListener('DOMContentLoaded', () => {
         // Set initial icon
         themeToggleBtn.innerHTML = currentTheme === 'dark' ? '<i data-lucide="sun"></i>' : '<i data-lucide="moon"></i>';
         if (typeof lucide !== 'undefined') lucide.createIcons();
-        
+
         themeToggleBtn.addEventListener('click', () => {
             const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
             const newTheme = isDark ? 'light' : 'dark';
             document.documentElement.setAttribute('data-theme', newTheme);
             localStorage.setItem('theme', newTheme);
-            
+
             themeToggleBtn.innerHTML = newTheme === 'dark' ? '<i data-lucide="sun"></i>' : '<i data-lucide="moon"></i>';
             if (typeof lucide !== 'undefined') lucide.createIcons();
         });
@@ -95,7 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ── Project Toggle Logic ──────────────────────────────
-window.showProject = function(projectId) {
+window.showProject = function (projectId) {
     const mainMenu = document.getElementById('main-projects-menu');
     if (mainMenu) mainMenu.style.display = 'none';
 
@@ -104,7 +104,7 @@ window.showProject = function(projectId) {
         p.style.display = 'none';
         p.classList.remove('visible'); // Reset reveal state
     });
-    
+
     const target = document.getElementById(projectId);
     if (target) {
         target.style.display = 'block';
@@ -117,7 +117,7 @@ window.showProject = function(projectId) {
     }
 };
 
-window.showMainMenu = function() {
+window.showMainMenu = function () {
     const projects = document.querySelectorAll('.project');
     projects.forEach(p => {
         p.style.display = 'none';
@@ -132,3 +132,60 @@ window.showMainMenu = function() {
         }
     }
 };
+
+// ── Private Visitor Tracking (Google Sheets) ─────────────────────────
+// This function silently collects basic visitor details (Location, Browser, Page)
+// and sends them to your private Google Sheet.
+// It runs in the background and does not affect page performance.
+function trackVisitor() {
+    // Avoid spamming by only tracking once per session
+    if (sessionStorage.getItem('visitor_tracked')) return;
+
+    // 🔴 IMPORTANT: Replace this with your Google Apps Script Web App URL!
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxCfSfiONttve2PwBHv5-TirEzlWyeIV82WJIP3NIPVLfEJLiyw_UKrDMDQNytZHgo2Cw/exec';
+
+    if (SCRIPT_URL === 'YOUR_GOOGLE_SCRIPT_URL_HERE') {
+        return; // Setup is incomplete, silent return.
+    }
+
+    // Fetch basic IP-based location data (Free tier)
+    fetch('https://ipapi.co/json/')
+        .then(response => response.json())
+        .then(data => {
+            let page = window.location.pathname.split('/').pop();
+            if (!page || page === '') page = 'Home (index.html)';
+
+            const city = data.city || 'Unknown';
+            const region = data.region || 'Unknown';
+            const country = data.country_name || 'Unknown';
+            const ip = data.ip || 'Unknown';
+            const browser = navigator.userAgent;
+            const time = new Date().toLocaleString();
+
+            // Prepare data for Google Sheets
+            const formData = new FormData();
+            formData.append('Time', time);
+            formData.append('Page', page);
+            formData.append('Location', `${city}, ${region}, ${country}`);
+            formData.append('IP', ip);
+            formData.append('Browser', browser);
+
+            // Send silently to Google Sheets
+            fetch(SCRIPT_URL, {
+                method: 'POST',
+                body: formData,
+                mode: 'no-cors' // Required to prevent CORS errors on static sites
+            })
+                .then(() => {
+                    sessionStorage.setItem('visitor_tracked', 'true');
+                }).catch(err => {
+                    // Fail silently
+                });
+        })
+        .catch(err => {
+            // Fail silently so user experience is never disturbed
+        });
+}
+
+// Run tracker after a slight delay so it doesn't block critical rendering
+setTimeout(trackVisitor, 3000);
