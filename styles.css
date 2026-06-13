@@ -1112,7 +1112,50 @@ footer {
     gap: 0.5rem;
     text-decoration: none;
     color: inherit;
+    position: relative;
 }
+
+.menu-card::after {
+    content: '→';
+    position: absolute;
+    bottom: 2rem;
+    right: 2rem;
+    font-size: 1.5rem;
+    color: var(--accent);
+    opacity: 0;
+    transform: translateX(-15px);
+    transition: all 0.3s ease;
+    font-family: 'Inter', sans-serif;
+}
+
+.menu-card:hover::after {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* ── Card Click Hint Animation on Scroll ── */
+@keyframes cardClickHint {
+    0% { transform: translateY(0); border-color: var(--border); }
+    50% { transform: translateY(-8px); border-color: var(--accent); box-shadow: 0 10px 25px rgba(37,99,235,0.15); }
+    100% { transform: translateY(0); border-color: var(--border); }
+}
+
+@keyframes arrowHint {
+    0% { opacity: 0; transform: translateX(-15px); }
+    30% { opacity: 1; transform: translateX(0); }
+    70% { opacity: 1; transform: translateX(0); }
+    100% { opacity: 0; transform: translateX(10px); }
+}
+
+.reveal.visible .menu-card:nth-child(1) { animation: cardClickHint 0.8s ease 0.6s; }
+.reveal.visible .menu-card:nth-child(2) { animation: cardClickHint 0.8s ease 0.75s; }
+.reveal.visible .menu-card:nth-child(3) { animation: cardClickHint 0.8s ease 0.9s; }
+.reveal.visible .menu-card:nth-child(4) { animation: cardClickHint 0.8s ease 1.05s; }
+
+.reveal.visible .menu-card:nth-child(1)::after { animation: arrowHint 1.2s ease 0.6s; }
+.reveal.visible .menu-card:nth-child(2)::after { animation: arrowHint 1.2s ease 0.75s; }
+.reveal.visible .menu-card:nth-child(3)::after { animation: arrowHint 1.2s ease 0.9s; }
+.reveal.visible .menu-card:nth-child(4)::after { animation: arrowHint 1.2s ease 1.05s; }
 
 .menu-card:hover {
     transform: translateY(-5px);
@@ -1132,4 +1175,111 @@ footer {
     font-size: 1rem;
     margin: 0;
     line-height: 1.5;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   WELCOME SCREEN & TUTORIAL
+   ═══════════════════════════════════════════════════════════ */
+
+.welcome-screen {
+    position: fixed;
+    inset: 0;
+    background: var(--bg);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+
+.welcome-screen.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.welcome-text {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 700;
+    color: var(--text);
+    opacity: 0;
+    transform: scale(1.2);
+    animation: zoomOutWelcome 2.5s forwards cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@keyframes zoomOutWelcome {
+    0% {
+        opacity: 0;
+        transform: scale(1.5);
+    }
+    20% {
+        opacity: 1;
+        transform: scale(1.2);
+    }
+    80% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+}
+
+.tutorial-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(2px);
+    z-index: 4000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+.tutorial-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.tutorial-tooltip {
+    position: fixed;
+    bottom: 40px;
+    left: 50%;
+    transform: translate(-50%, 20px);
+    background: var(--surface);
+    color: var(--text);
+    padding: 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    z-index: 4001;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    width: max-content;
+    max-width: 90vw;
+    text-align: center;
+}
+
+.tutorial-tooltip.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, 0);
+}
+
+.menu-card.tutorial-highlight {
+    position: relative;
+    z-index: 4002;
+    background: var(--surface);
+    box-shadow: 0 0 0 4px var(--accent), 0 0 20px rgba(37,99,235,0.4);
+    animation: pulseHighlight 2s infinite;
+}
+
+@keyframes pulseHighlight {
+    0% { box-shadow: 0 0 0 0 rgba(37,99,235,0.7); }
+    70% { box-shadow: 0 0 0 15px rgba(37,99,235,0); }
+    100% { box-shadow: 0 0 0 0 rgba(37,99,235,0); }
 }

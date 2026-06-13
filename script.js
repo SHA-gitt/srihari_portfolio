@@ -55,9 +55,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // ── Theme Toggle ──────────────────────────────────────
     const themeToggleBtn = document.getElementById('theme-toggle');
     const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
-
-    // Check for saved theme preference or use system preference
-    const currentTheme = localStorage.getItem('theme') || (prefersDarkScheme.matches ? 'dark' : 'light');
+    // Check for saved theme preference, defaulting to light mode
+    const currentTheme = localStorage.getItem('theme') || 'light';
     if (currentTheme === 'dark') {
         document.documentElement.setAttribute('data-theme', 'dark');
     }
@@ -90,7 +89,60 @@ document.addEventListener('DOMContentLoaded', () => {
         updateClock();
         setInterval(updateClock, 1000);
     }
+    
+    // ── Welcome Screen & Tutorial ────────────────────────
+    // Changed key to trigger tutorial again for the user
+    const hasVisited = localStorage.getItem('portfolioVisited_v2');
+    const welcomeScreen = document.getElementById('welcome-screen');
+    const tutorialOverlay = document.getElementById('tutorial-overlay');
+    const tutorialTooltip = document.getElementById('tutorial-tooltip');
+    const tutorialCloseBtn = document.getElementById('tutorial-close-btn');
+    
+    // Find the first menu card to highlight
+    const firstMenuCard = document.querySelector('.menu-card');
 
+    if (!hasVisited) {
+        // First visit
+        if (welcomeScreen) {
+            // After animation ends, hide welcome screen and show tutorial
+            setTimeout(() => {
+                welcomeScreen.classList.add('hidden');
+                
+                // Remove welcome screen from DOM after transition
+                setTimeout(() => {
+                    welcomeScreen.remove();
+                    
+                    // Show tutorial
+                    if (firstMenuCard && tutorialOverlay && tutorialTooltip) {
+                        // Scroll slightly so the card is visible
+                        firstMenuCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        
+                        setTimeout(() => {
+                            firstMenuCard.classList.add('tutorial-highlight');
+                            tutorialOverlay.classList.add('active');
+                            tutorialTooltip.classList.add('active');
+                        }, 800);
+                    }
+                }, 800);
+            }, 2500); // 2.5s for the animation
+        }
+
+        const closeTutorial = () => {
+            if (firstMenuCard) firstMenuCard.classList.remove('tutorial-highlight');
+            if (tutorialOverlay) tutorialOverlay.classList.remove('active');
+            if (tutorialTooltip) tutorialTooltip.classList.remove('active');
+            localStorage.setItem('portfolioVisited_v2', 'true');
+        };
+
+        if (tutorialCloseBtn) tutorialCloseBtn.addEventListener('click', closeTutorial);
+        if (tutorialOverlay) tutorialOverlay.addEventListener('click', closeTutorial);
+
+    } else {
+        // Not first visit, instantly hide welcome and tutorial
+        if (welcomeScreen) welcomeScreen.style.display = 'none';
+        if (tutorialOverlay) tutorialOverlay.style.display = 'none';
+        if (tutorialTooltip) tutorialTooltip.style.display = 'none';
+    }
 
 });
 
@@ -189,3 +241,4 @@ function trackVisitor() {
 
 // Run tracker after a slight delay so it doesn't block critical rendering
 setTimeout(trackVisitor, 3000);
+
